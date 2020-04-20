@@ -1,0 +1,41 @@
+------- CREDIT SINTESI -------
+---- MARC
+-- LOGIN | REGISTRO
+- Registro, contraseña y correo por hash (bcrypt), cuando se registra envia un correo para confirmar que incluye el link con el hash del correo (ya que es unico)
+- Si se intenta registrar de nuevo, si no esta activado reenviamos link de activacion. Sino simplemente mostramos mensaje
+- La primera vez que se logea, tiene que rellenar su perfil, es decir le apareceran los campos que haya designado el administrador como imprescindibles para completar.
+- Llamar al WS via curl (un proyecto para el WS y otro para el cliente) (Crear una clave para el cliente cada vez que se logee)
+- El cliente solo tiene codigo necesario para llamar al web service
+
+----- BACKEND 
+- Todas las funciones WS
+----- FRONTEND (Preparado para movil)
+- Funciones minimas para llamar al WS y montar la parte cliente
+- Al iniciar el primer login rellenar datos básicos
+- Después siempre tendtrá la posibilidad de modificar los aspectos básicos en su perfil
+- La vista principal sera un calendario dónde cada día podrá poner los sintomas que tiene
+	- Via checkbox podrá desmarcar o marcar los sintomas que tiene
+	- En caso de que alguna opcion necesite más opciones hacemos radio.
+
+-- La aplicación movil será un web view de la aplicación web, però tendrá un hilo que via bluetooth al conectarse con otro dispositivo
+ le dirá la probabilidad de estar contagiado
+-- Guardamos el número de personas con las que ha entrado en contacto y tienen una probabilidad de estar infectadas bastante alta.
+
+-- Vista PERFIL (Aspectos básicos)
+-- Vista Calendario y cuando aprete el dia los sintomas en checkbox
+-- Si el administrador añade un aspecto básico más al perfil, que aparezca un warning en el momento que se logea el usuario.
+
+---- GORKA
+-- BDD
+CREATE TABLE Usuario
+(
+	id BIGINT UNSIGNED primary key AUTO_INCREMENT,
+	email string(200) not null unique,
+	password string(200) not null,
+	activado boolean
+);
+
+
+
+- Tabla Usuario con campo activado (si/no)(boolean)
+- Una tabla para cada una de las opciones del input
