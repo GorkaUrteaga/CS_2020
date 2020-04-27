@@ -21,8 +21,8 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://localhost:8080/';
-
+	//public $baseURL = 'http://localhost:8080/';
+    public $baseURL = 'http://localhost/CS/Frontend/public/';
 	/*
 	|--------------------------------------------------------------------------
 	| Index File
@@ -264,5 +264,6 @@ class App extends BaseConfig
 	|   - http://www.html5rocks.com/en/tutorials/security/content-security-policy/
 	|   - http://www.w3.org/TR/CSP/
 	*/
-	public $CSPEnabled = false;
+    public $CSPEnabled = false;
+    
 }
