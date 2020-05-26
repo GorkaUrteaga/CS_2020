@@ -3,8 +3,8 @@
 */
 
 /* INSERT ADMINISTRADORS Marc i Gorka */
-INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('$2y$10$HLOVbQFwKfjuUk58obER6.b0jBNV90qdNr2miWIW9tFuqzmfTfana','$2y$10$59vKqn565aocUETGk/zEue/ktUo2gC9gFZhw9SIdem.dSYfB1Zy8u', true, true);
-INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('$2y$10$YHjwkpJ1pga6ziYnxQhONu7TUhDOmJuJ6Z6rMEh7IxHKHS//h4ozO','$2y$10$OWhKHcg536Fs35T3qAa7OeonoMlOF4oqf4IO1vPpAwBnAnTP4qho2', true, true);
+INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('03acdad1148f03a359b52d96e5255932','dc6ae7fd83dab1a4a706311971b6f2aa', true, true);
+INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('d09663e78d67c9e8291134cde7ab014a','983a21a1216c2f1e25479180031f58bb', true, true);
 
 /* Sempre han de donar 100% */ 
 INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Fiebre',40);
