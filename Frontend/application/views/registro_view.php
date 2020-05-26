@@ -27,9 +27,9 @@
             </div>
 
             <!-- Login Form -->
-            <form>
-                <input type="text" id="email" class="fadeIn second" name="login" placeholder="correo">
-                <input type="password" id="password" class="fadeIn third" name="login" placeholder="contraseña">
+            <form method="post" action="<?= site_url('Registro/registro');?>">
+                <input type="text" id="email" class="fadeIn second" name="email" placeholder="correo">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="contraseña">
                 <input type="submit" class="fadeIn fourth" value="Registrate">
             </form>
 

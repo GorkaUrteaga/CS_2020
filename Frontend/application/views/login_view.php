@@ -27,13 +27,12 @@
             </div>
 
             <!-- Login Form -->
-            <form>
-                <input type="text" id="login" class="fadeIn second" name="email" placeholder="correo">
-                <input type="password" id="password" class="fadeIn third" name="login" placeholder="contraseña">
+            <form method="post" action="<?= site_url('Login/login');?>">
+                <input type="text" id="email" class="fadeIn second" name="email" placeholder="correo">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="contraseña">
                 <input type="submit" class="fadeIn fourth" value="Log In">
             </form>
 
-            
             <!-- Registrate -->
             <div id="formFooter">
                 <!-- Contraseña olvidada -->
