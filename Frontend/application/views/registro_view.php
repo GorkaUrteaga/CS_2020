@@ -30,6 +30,7 @@
             <form method="post" action="<?= site_url('Registro/registro');?>">
                 <input type="text" id="email" class="fadeIn second" name="email" placeholder="correo">
                 <input type="password" id="password" class="fadeIn third" name="password" placeholder="contraseña">
+                <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="confirmación contraseña">
                 <input type="submit" class="fadeIn fourth" value="Registrate">
             </form>
 

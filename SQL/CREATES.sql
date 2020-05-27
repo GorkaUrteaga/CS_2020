@@ -8,9 +8,9 @@ CREATE TABLE USUARIO
 	email VARCHAR(200) not null unique, /* HASH */
 	password VARCHAR(200) not null, /* HASH */
 	mac_bluetooth VARCHAR(200), /* HASH */
-	es_admin BOOLEAN not null,
-	perfil_completado BOOLEAN, /* Boolea per indicar si l'usuari ja ha omplert el seu perfil */
-	activado BOOLEAN not null,
+	es_admin BOOLEAN not null DEFAULT false,
+	perfil_completado BOOLEAN not null DEFAULT false, /* Boolea per indicar si l'usuari ja ha omplert el seu perfil */
+	activado BOOLEAN not null DEFAULT false,
 	riesgo INT 
 );
 
