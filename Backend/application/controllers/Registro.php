@@ -16,10 +16,11 @@ class Registro extends REST_Controller{
   public function registro_post(){
     
     $status = NULL;
+    $message = NULL;
     $mail = $this->post('email');
     $pass = $this->post('password');
 
-    $us = $this->UsuarioModel->getOne($mail,$pass);
+    $us = $this->UsuarioModel->getUsuarioPorCorreo(md5($mail));
     
     /*
         ESTATS
@@ -36,16 +37,16 @@ class Registro extends REST_Controller{
         if(!$us["activado"]){
             if($this->MailModel->enviarCorreoRegistro($mail)){
                 $status = 2;
-                $message = "CORREU REENVIAT (USUARI EXISTENT PERO NO ACTIU)";
+                $message = "CORREO REENVIADO (USUARIO EXISTENTE PERO NO VERIFICADO)";
             }
             else{
                 $status = -2;
-                $message = "CORREU NO ENVIAT";
+                $message = "CORREO NO ENVIADO";
             }
         }
         else{
             $status = -1;
-            $message = "USUARI JA EXISTENT (JA ACTIVAT)";
+            $message = "USUARIO YA EXISTENTE!";
         }
     }
     else{
@@ -59,11 +60,12 @@ class Registro extends REST_Controller{
             }
             else{
                 $status = -2;
-                $message = "CORREU NO ENVIAT";
+                $message = "CORREO NO ENVIADO";
             }
         }
         else{
             $status = -3;
+            $message = "USUARIO NO REGISTRADO!";
         }
     }
 
@@ -79,5 +81,3 @@ class Registro extends REST_Controller{
   
 
 }
-
-?>

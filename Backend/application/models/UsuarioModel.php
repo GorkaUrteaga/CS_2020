@@ -19,7 +19,19 @@ class UsuarioModel extends CI_Model {
 			return null;
 		
 		return $q->result_array()[0];	
-	}
+    }
+    
+    public function getUsuarioPorCorreo ($mail)
+    {
+        $array = array('email' => $mail);
+		$this->db->from('usuario');
+		$this->db->where($array);
+		$q = $this->db->get();
+		if (count($q->result_array()) == 0) 
+			return null;
+		
+		return $q->result_array()[0];	
+    }
 
 	public function registro($mail,$pass){
 		$ok = false;
