@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
 </head>
 
 <body>
@@ -23,22 +24,30 @@
 
             <!-- Icon -->
             <div class="fadeIn first">
-                <img src="<?=base_url('imgs/health_icon.png')?>" id="icon" alt="COVID-19"/>
+                <img src="<?= base_url('imgs/health_icon.png') ?>" id="icon" alt="COVID-19" />
             </div>
+            <h4 class="tittle">Login</h4>
 
-            <!-- Login Form -->
-            <form method="post" action="<?= site_url('Login/login');?>">
-                <input type="text" id="email" class="fadeIn second" name="email" placeholder="correo">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="contraseña">
-                <input type="submit" class="fadeIn fourth" value="Log In">
-            </form>
+            <?php if (isset($error)) : ?>
+                <p class="error"><?= $error ?></p>
+            <?php endif; ?>
 
-            <!-- Registrate -->
-            <div id="formFooter">
-                <!-- Contraseña olvidada -->
-                <a class="underlineHover" href="#">¿Has olvidado la contraseña?</a>
-                <hr>
-                <p>¿No tienes una cuenta? <a class="underlineHover" href="<?= site_url('Registro') ?>">Regístrate</a></p>
+            
+            <div class="d-flex flex-column justify-content-between h-100">
+                <!-- Login Form -->
+                <form method="post" action="<?= site_url('Login/logear'); ?>">
+                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+                    <input type="submit" class="fadeIn fourth" value="Log In">
+                </form>
+
+                <!-- Registrate -->
+                <div id="formFooter">
+                    <!-- Contraseña olvidada -->
+                    <a class="underlineHover" href="#">¿Has olvidado la contraseña?</a>
+                    <hr>
+                    <p>¿No tienes una cuenta? <a class="underlineHover" href="<?= site_url('Registro') ?>">Regístrate</a></p>
+                </div>
             </div>
         </div>
     </div>

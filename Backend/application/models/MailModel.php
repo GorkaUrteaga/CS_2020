@@ -30,7 +30,7 @@ class MailModel extends CI_Model {
         $mail->IsHTML(true);
         $mail->Subject = SUBJECT;
         $md5email = md5($email);
-        $mail->Body = BODY."<br><br><a href='http://127.0.0.1/Frontend/index.php/Registro/activacion/".$md5email."'>Verificar Cuenta Aquí</a><br><br>".FOOTERMAIL;
+        $mail->Body = BODY."<br><br><a href='" . RUTAACTIVACION . $md5email."'>Verificar Cuenta Aquí</a><br><br>".FOOTERMAIL;
         return $mail->Send();
     }
 }

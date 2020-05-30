@@ -44,16 +44,28 @@ h2 {
 }
 
 #formContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  padding: 0px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  padding: 30px;
   width: 100%;
-  max-width: 450px;
   position: relative;
-  padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
+  height: 100vh;
 }
 
 #formFooter {
@@ -62,6 +74,7 @@ h2 {
   padding: 25px;
   text-align: center;
   border-radius: 0 0 10px 10px;
+  width: 100%;
 }
 
 /* TABS */
@@ -129,7 +142,7 @@ input[type=text], input[type=password] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus, input[type=password]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
@@ -144,8 +157,25 @@ input[type=text]:placeholder {
 }
 
 #icon {
-  width: 10%;
+  width: 50px;
+  height: 50px;
   margin-top: 30px;
   margin-bottom: 10px;
+}
+
+.tittle {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  #formContent {
+    padding-top: 0px;
+    height: 100%;
+    max-width: 450px;
+  }
+  #formFooter {
+    position: relative;
+  }
 }
 /*# sourceMappingURL=login-registro.css.map */

@@ -15,11 +15,23 @@ class Login extends REST_Controller{
     
     $mail = $this->post('email');
     $pass = $this->post('password');
+    $status = 1;
+    $message = null;
+
+    $usuario = $this->UsuarioModel->getOne($mail,$pass);
+
+    if($usuario == null)
+    {
+        $status = 0;
+        $message = "Correo o contraseña incorrectos.";
+    }
+
+
     $this->response(
         array(
-            "status" => 1,
-            "message" => "One user",
-            "data" => $this->UsuarioModel->getOne($mail,$pass)
+            "status" => $status,
+            "message" => $message,
+            "data" => $usuario
         ), 
         REST_Controller::HTTP_OK
     );

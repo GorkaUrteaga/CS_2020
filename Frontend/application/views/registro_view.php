@@ -7,7 +7,8 @@
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
 </head>
 
 <body>
@@ -23,22 +24,27 @@
 
             <!-- Icon -->
             <div class="fadeIn first">
-            <img src="<?=base_url('imgs/health_icon.png')?>" id="icon" alt="COVID-19"/>
+                <img src="<?= base_url('imgs/health_icon.png') ?>" id="icon" alt="COVID-19" />
             </div>
+            <h4 class="tittle">Registro</h4>
+            <?php if (isset($error)) : ?>
+                <p class="error"><?= $error ?></p>
+            <?php endif; ?>
 
-            <!-- Login Form -->
-            <form method="post" action="<?= site_url('Registro/registro');?>">
-                <input type="text" id="email" class="fadeIn second" name="email" placeholder="correo">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="contraseña">
-                <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="confirmación contraseña">
-                <input type="submit" class="fadeIn fourth" value="Registrate">
-            </form>
+            <div class="d-flex flex-column justify-content-between h-100">
+                <!-- Login Form -->
+                <form method="post" action="<?= site_url('Registro/registrar'); ?>">
+                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+                    <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="Confirmación contraseña">
+                    <input type="submit" class="fadeIn fourth" value="Registrate">
+                </form>
 
-            <!-- Logeate -->
-            <div id="formFooter">
-                <p>¿Tienes una cuenta? <a class="underlineHover" href="<?= site_url('Login') ?>">Inicia sesión</a></p>
+                <!-- Logeate -->
+                <div id="formFooter">
+                    <p>¿Tienes una cuenta? <a class="underlineHover" href="<?= site_url('Login') ?>">Inicia sesión</a></p>
+                </div>
             </div>
-
         </div>
     </div>
 

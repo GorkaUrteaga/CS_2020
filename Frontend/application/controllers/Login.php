@@ -4,7 +4,7 @@ include APPPATH . 'third_party\config_ws.php';
 
 class Login extends CI_Controller
 {
-    private $baseUrl = wsUrl . '\Login';
+    private $baseUrl = wsUrl . 'Login/';
     private $ch = null;
 
     function __construct()
@@ -34,8 +34,9 @@ class Login extends CI_Controller
         $action = 'login';
         $url = $this->baseUrl . $action;
         $ch = $this->ch;
-        $email = md5($this->input->post('email'));
-        $password = md5($this->input->post('password'));
+        $email = sha1($this->input->post('email'));
+        $password = sha1($this->input->post('password'));
+        $response = "";
 
         $request = 'email=' . $email . '&' . 'password=' . $password;
         //Cridem a la funció WS que ens retorna si es correcte o no el login i si ho es el guardem en session i continuem depenent del rol cap a un lloc o un altre
@@ -43,14 +44,27 @@ class Login extends CI_Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0); //0 per evitar que el request doni la capsalera
 
         $response = curl_exec($ch);
-        var_dump($response['data']);
-        exit;
-        //Si la data es null l'usuari no existeix tornem a la vista amb errors
-
         
+        $json = json_decode ($response);
+        
+        $usuario = $json->data;
+        
+        if($usuario != null)
+        {
+            //Si el usuario existe redirigimos en base a su rol
+            //Guardamos el usuario en session
+            $this->session->set_userdata('usuario', $usuario);
+            Redirect('Admin');
+            
+        }else{
+            //Enviamos a login con mensaje de error correo o contrasseña incorrectos
+            $message = $json->message;
+            $data = ['error' => $message];
+            $this->load->view('login_view',$data);
+        }
 
     }
 
