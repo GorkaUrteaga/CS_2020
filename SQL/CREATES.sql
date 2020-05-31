@@ -19,8 +19,7 @@ CREATE TABLE USUARIO
 CREATE TABLE HABITO
 (
 	id BIGINT UNSIGNED primary key AUTO_INCREMENT,
-	nombre VARCHAR(200) not null unique,
-	porcentaje INT not null 
+	nombre VARCHAR(200) not null unique
 );
 
 CREATE TABLE RESPUESTA_HABITO

@@ -158,30 +158,18 @@ class Admin extends CI_Controller
         $porcentajes = $this->input->post('porcentajes[]');
         $items = $this->session->items;
 
-        var_dump($porcentajes);
-        var_dump($items);
-
-
         if(!empty($porcentajes))
         {
             $suma = array_sum ($porcentajes);
             $pos = array_search (0 , $porcentajes);
-            echo "ENTRO!!!!!!";
-            echo "POSICION___" . $pos;
-            echo "SUMA___" . $suma;
         }
 
         if(empty($items) || ($pos != null && $pos >= 0) || $suma != 100)
         {
             //array_push($arrayErrores, 'La suma de todos los porcentajes debe ser 100.');
             //array_push($arrayErrores, 'Todos los sintomas deben tener un porcentaje mayor a 0.');
-
-            echo "______POR QUE?_____";
             $todoOk = false;
         }
-
-        echo $todoOk?'true':'false';
-        //exit;
 
         if(!$todoOk)
         {
@@ -200,8 +188,6 @@ class Admin extends CI_Controller
 
             $request = 'sintomas=' . json_encode($items);
 
-            var_dump(json_encode($items));
-
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -210,11 +196,6 @@ class Admin extends CI_Controller
 
             $response = curl_exec($ch);
             $json = json_decode ($response);
-            
-            echo "<hr>";
-
-            var_dump($json);
-            exit;
 
             //Dará respuesta para indicar si ha ido bien o no.
             

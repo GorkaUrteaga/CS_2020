@@ -56,7 +56,6 @@ class SintomaModel extends CI_Model
                 
             }
 
-            //No elimina
             $this->db->where_not_in('id', $ids);
             $this->db->delete('sintoma');
 

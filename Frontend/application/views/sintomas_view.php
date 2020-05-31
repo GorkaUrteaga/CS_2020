@@ -30,7 +30,7 @@
                         Añadir Sintoma
                     </button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                <?php elseif (isset($items)) : ?>
+                <?php else : ?>
                     <a href="<?= site_url('Admin/editarItems'); ?>"><i class="edit fas fa-edit"></i></a>
                 <?php endif ?>
             </div>
@@ -76,8 +76,6 @@
                 </tbody>
             </table>
         </form>
-
-
 
         <!-- Modal -->
         <form method="post" action="<?= site_url('Admin/addItem'); ?>">

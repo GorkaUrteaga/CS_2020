@@ -11,6 +11,7 @@ class HabitoModel extends CI_Model
     public function getAll()
     {
         $this->db->from('habito');
+        $this->db->join('comments', 'comments.id = blogs.id');
         $q = $this->db->get();
         if (count($q->result_array()) == 0)
         {

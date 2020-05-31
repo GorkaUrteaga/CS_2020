@@ -19,17 +19,32 @@
 
     <div class="container-fluid">
         <h5>HABITOS</h5>
-        <hr>
-        <form method="post" class="w-100" action="<?= site_url('Admin/add_habito'); ?>">
+        <form method="post" class="w-100" action="<?= site_url('Admin/guardarHabito'); ?>">
 
             <div class="d-flex justify-content-around align-center">
                 <?php if (isset($this->session->editar)) : ?>
                     <a id="button" class="btn btn-primary" href="<?= site_url('Admin/cancelarEdicion'); ?>">Cancelar</a>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                <?php elseif (isset($items)) : ?>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sintomaModal">
+                        Añadir Habito
+                    </button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                <?php else : ?>
                     <a href="<?= site_url('Admin/editarItems'); ?>"><i class="edit fas fa-edit"></i></a>
                 <?php endif ?>
             </div>
+
+            <?php if (isset($this->session->editar)) : ?>
+                <p id="js_porcentaje"></p>
+            <?php endif ?>
+            <?php if (isset($errores)) : ?>
+                <ul>
+                    <?php foreach ($errores as $error) : ?>
+                        <li><?= $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif ?>
+            <br>
 
             <table id="table_items" class="w-75 table table-striped table-dark">
                 <thead>
@@ -38,7 +53,6 @@
                         <th scope="col">Sintoma</th>
                         <th scope="col">Porcentaje</th>
                         <?php if (isset($this->session->editar)) : ?>
-                            <th scope="col">Nuevo porcentaje</th>
                             <th scope="col">Eliminar</th>
                         <?php endif; ?>
                     </tr>
@@ -49,12 +63,41 @@
                             <tr>
                                 <td><?= $item->id ?></td>
                                 <td><?= $item->nombre ?></td>
-                                <td><?= $item->porcentaje ?></td>
+                                <?php if (isset($this->session->editar)) : ?>
+                                    <td><input type="text" id="porcentajes" class="fadeIn second" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                    <td><a href="<?= site_url('Admin/eliminarItem/' . $item->id); ?>"><i class="far fa-trash-alt"></i></a></td>
+                                <?php else : ?>
+                                    <td><?= $item->porcentaje_si ?></td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
             </table>
+        </form>
+
+        <!-- Modal -->
+        <form method="post" action="<?= site_url('Admin/addItem'); ?>">
+            <div class="modal fade" id="sintomaModal" tabindex="-1" role="dialog" aria-labelledby="sintomaModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="sintomaModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="sintoma">Sintoma: </label>
+                            <input type="text" id="sintoma" class="form-control" name="nombre" placeholder="Sintoma">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
 
     </div>
