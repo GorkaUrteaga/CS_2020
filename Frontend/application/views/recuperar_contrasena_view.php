@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Recuperar Contraseña</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
@@ -26,27 +26,26 @@
             <div class="fadeIn first">
                 <img src="<?= base_url('imgs/health_icon.png') ?>" id="icon" alt="COVID-19" />
             </div>
-            <h4 class="tittle">Login</h4>
+            <h4 class="tittle">Recuperar Contraseña</h4>
 
             <?php if (isset($error)) : ?>
                 <p class="error"><?= $error ?></p>
             <?php endif; ?>
 
-            
+
             <div class="d-flex flex-column justify-content-between h-100">
-                <!-- Login Form -->
-                <form method="post" action="<?= site_url('Login/logear'); ?>">
-                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
-                    <input type="submit" class="fadeIn fourth" value="Log In">
+                <form method="post" action="<?= site_url('Login/recuperarContrasena'); ?>">
+                    <?php if (!isset($recuperar)) : ?>
+                        <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
+                    <?php else : ?>
+                        <p>Introduce el código que te hemos enviado al correo.</p>
+                        <input type="text" id="codigo" class="fadeIn second" name="codigo" placeholder="Codigo">
+                    <?php endif; ?>
+                    <input type="submit" class="fadeIn fourth" value="Recuperar">
                 </form>
 
-                <!-- Registrate -->
                 <div id="formFooter">
-                    <!-- Contraseña olvidada -->
-                    <a class="underlineHover" href="<?= site_url('Login/recuperarContrasena'); ?>">¿Has olvidado la contraseña?</a>
-                    <hr>
-                    <p>¿No tienes una cuenta? <a class="underlineHover" href="<?= site_url('Registro') ?>">Regístrate</a></p>
+                    <p>¿Ya tienes cuenta?<a class="underlineHover" href="<?= site_url('Login') ?>">Login</a></p>
                 </div>
             </div>
         </div>

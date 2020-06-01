@@ -33,19 +33,28 @@ class SintomaModel extends CI_Model
             //Per cada item insertarem o modificarem en base a si existeix o no
             foreach ($items as $item) {
                 $query = $this->db->get_where('sintoma', array('id' => $item->id));
-                array_push($ids, $item->id);
+                
 
                 /**/
                 if ($query->num_rows() == 0) {
                     //Insert
+
                     $data = array(
                         'nombre' => $item->nombre,
                         'porcentaje' => $item->porcentaje
                     );
 
                     $this->db->insert('sintoma', $data);
+
+                    $sintomaId = $this->db->insert_id();
+
+                    array_push($ids, $sintomaId);
+
                 } else {
                     //Update
+
+                    array_push($ids, $item->id);
+
                     $data = array(
                         'porcentaje' => $item->porcentaje
                     );

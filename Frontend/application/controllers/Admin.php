@@ -20,10 +20,20 @@ class Admin extends CI_Controller
 
     }
 
-    public function index($mantenimiento = 'sintomas')
+    public function index($mantenimiento = null)
     {
         $this->session->unset_userdata('editar');
         $this->load->view('admin_view');
+
+        if($mantenimiento == null)
+        {
+            $mantenimiento = $this->session->vista;
+            if($mantenimiento == null)
+            {
+                $mantenimiento = 'sintomas';
+            }
+        }
+
 
         $action = $mantenimiento;
         $url = $this->baseUrl . $action;
@@ -40,7 +50,9 @@ class Admin extends CI_Controller
 
         $response = curl_exec($ch);
         $json = json_decode ($response);
-        
+        //var_dump($url);
+        //var_dump($response);
+        //exit;
         $items = $json->data;
 
         $maxId =  1;
@@ -134,7 +146,13 @@ class Admin extends CI_Controller
         );
 
         if(empty($item)){
-            $item = (object) ['id' => $maxId, 'nombre' => $nombre, 'porcentaje' => 0];
+            if($this->session->vista == 'sintomas')
+            {
+                $item = (object) ['id' => $maxId, 'nombre' => $nombre, 'porcentaje' => 0];
+            }else{
+                $item = (object) ['id' => $maxId, 'nombre' => $nombre, 'si' => 0, 'no' => 0, 'a_veces' => 0];
+            }
+            
             array_push($items, $item);
             $this->session->set_userdata('maxId',$maxId);
             $this->session->set_userdata('items',$items);
@@ -197,10 +215,61 @@ class Admin extends CI_Controller
             $response = curl_exec($ch);
             $json = json_decode ($response);
 
-            //Dará respuesta para indicar si ha ido bien o no.
-            
             Redirect('Admin');
 
+        }
+
+    }
+
+    public function guardarHabito()
+    {
+        $action = 'guardarHabitos';
+        $url = $this->baseUrl . $action;
+        $ch = $this->ch;
+        $response = '';
+        $request = '';
+        $suma = 0;
+        $todoOk = true;
+        $pos = -1;
+
+        $porcSi = $this->input->post('porcentajes_si[]');
+        $porcNo = $this->input->post('porcentajes_no[]');
+        $porcAveces = $this->input->post('porcentajes_a_veces[]');
+        $items = $this->session->items;
+
+        if(empty($items) || empty($porcNo) || empty($porcAveces))
+        {
+            $todoOk = false;
+        }
+
+        if(!$todoOk)
+        {
+            $this->cargarVistas();
+        }else
+        {
+            //Guardamos
+            $i = 0;
+            foreach($items as $item)
+            {
+                $item->si = $porcSi[$i];
+                $item->no = $porcNo[$i];
+                $item->a_veces = $porcAveces[$i];
+                $i++;
+            }
+
+            $request = 'habitos=' . json_encode($items);
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+
+            $response = curl_exec($ch);
+            $json = json_decode ($response);
+            var_dump($json);
+            //exit;
+            Redirect('Admin');
         }
 
     }

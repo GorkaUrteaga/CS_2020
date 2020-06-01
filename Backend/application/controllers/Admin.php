@@ -74,7 +74,6 @@ class Admin extends REST_Controller{
 
         //Esta funcion se encarga de hacer todo, delete, insert i updates
         
-        //Aquí està el error!!!!!!!!!!!!!
         $status = $this->SintomaModel->guardarSintomas($items);
 
         $this->response(
@@ -84,6 +83,27 @@ class Admin extends REST_Controller{
             ), 
             REST_Controller::HTTP_OK
         );
-
     }
+
+    public function guardarHabitos_post()
+    {
+        $items_json = $this->post('habitos');
+        $status = 0;
+        $message = null;
+        
+        $items = json_decode($items_json);
+
+        //Esta funcion se encarga de hacer todo, delete, insert i updates
+
+        $status = $this->HabitoModel->guardarHabitos($items);
+
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => $status?'Se han modificado los habitos.':'No se han podido guardar los habitos.'
+            ), 
+            REST_Controller::HTTP_OK
+        );
+    }
+
 }

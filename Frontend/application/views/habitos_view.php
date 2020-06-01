@@ -25,7 +25,7 @@
                 <?php if (isset($this->session->editar)) : ?>
                     <a id="button" class="btn btn-primary" href="<?= site_url('Admin/cancelarEdicion'); ?>">Cancelar</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sintomaModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#habitoModal">
                         Añadir Habito
                     </button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -46,12 +46,14 @@
             <?php endif ?>
             <br>
 
-            <table id="table_items" class="w-75 table table-striped table-dark">
+            <table id="table_items" class="w-75 table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Sintoma</th>
-                        <th scope="col">Porcentaje</th>
+                        <th scope="col">Habito</th>
+                        <th scope="col">Si</th>
+                        <th scope="col">No</th>
+                        <th scope="col">A veces</th>
                         <?php if (isset($this->session->editar)) : ?>
                             <th scope="col">Eliminar</th>
                         <?php endif; ?>
@@ -64,10 +66,14 @@
                                 <td><?= $item->id ?></td>
                                 <td><?= $item->nombre ?></td>
                                 <?php if (isset($this->session->editar)) : ?>
-                                    <td><input type="text" id="porcentajes" class="fadeIn second" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                    <td><input type="text" id="porcentajes_si" class="fadeIn second" name="porcentajes_si[]" value="<?= $item->si ?>" placeholder="<?= $item->si ?>"></td>
+                                    <td><input type="text" id="porcentajes_no" class="fadeIn second" name="porcentajes_no[]" value="<?= $item->no ?>" placeholder="<?= $item->no ?>"></td>
+                                    <td><input type="text" id="porcentajes_a_veces" class="fadeIn second" name="porcentajes_a_veces[]" value="<?= $item->a_veces ?>" placeholder="<?= $item->a_veces ?>"></td>
                                     <td><a href="<?= site_url('Admin/eliminarItem/' . $item->id); ?>"><i class="far fa-trash-alt"></i></a></td>
                                 <?php else : ?>
-                                    <td><?= $item->porcentaje_si ?></td>
+                                    <td><?= $item->si ?></td>
+                                    <td><?= $item->no ?></td>
+                                    <td><?= $item->a_veces ?></td>
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
@@ -78,18 +84,18 @@
 
         <!-- Modal -->
         <form method="post" action="<?= site_url('Admin/addItem'); ?>">
-            <div class="modal fade" id="sintomaModal" tabindex="-1" role="dialog" aria-labelledby="sintomaModalLabel" aria-hidden="true">
+            <div class="modal fade" id="habitoModal" tabindex="-1" role="dialog" aria-labelledby="habitoModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="sintomaModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="habitoModalLabel">Añadir un habito</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <label for="sintoma">Sintoma: </label>
-                            <input type="text" id="sintoma" class="form-control" name="nombre" placeholder="Sintoma">
+                            <label for="habito">Habito: </label>
+                            <input type="text" id="habito" class="form-control" name="nombre" placeholder="Habito" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

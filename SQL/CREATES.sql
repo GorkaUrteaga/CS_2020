@@ -26,7 +26,7 @@ CREATE TABLE RESPUESTA_HABITO
 (
 	id BIGINT UNSIGNED primary key AUTO_INCREMENT,
 	id_habito BIGINT UNSIGNED,
-	respuesta VARCHAR(200) not null unique,
+	respuesta VARCHAR(200) not null,
 	porcentaje INT not null,
 	FOREIGN KEY (id_habito) REFERENCES HABITO(id)
 );
@@ -39,8 +39,10 @@ CREATE TABLE RESPUESTA_HABITO
 CREATE TABLE RESPUESTA_HABITO_USUARIO
 (
 	id BIGINT UNSIGNED primary key AUTO_INCREMENT,
+	id_habito BIGINT UNSIGNED,
 	id_usuario BIGINT UNSIGNED,
 	id_respuesta BIGINT UNSIGNED, 
+	FOREIGN KEY (id_habito) REFERENCES HABITO(id),
 	FOREIGN KEY (id_respuesta) REFERENCES RESPUESTA_HABITO(id),
 	FOREIGN KEY (id_usuario) REFERENCES USUARIO(id)
 );
@@ -66,3 +68,9 @@ CREATE TABLE INTERVALO_SINTOMA
 	respuesta_sintoma BOOLEAN
 );
 
+CREATE VIEW vw_habito_respuestas
+AS
+SELECT *, (select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'Si') as si
+,(select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'No') as no,
+(select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'A veces') as a_veces
+from habito h
