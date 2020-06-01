@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/admin.css'); ?>">
+    <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/c2dea4f87e.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="<?= base_url('js/sintomas.js'); ?>"></script>
 </head>
 
 <body>
@@ -29,15 +31,13 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sintomaModal">
                         Añadir Sintoma
                     </button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" id="guardarButton" class="btn btn-primary">Guardar</button>
                 <?php else : ?>
                     <a href="<?= site_url('Admin/editarItems'); ?>"><i class="edit fas fa-edit"></i></a>
                 <?php endif ?>
             </div>
 
-            <?php if (isset($this->session->editar)) : ?>
-                <p id="js_porcentaje"></p>
-            <?php endif ?>
+            
             <?php if (isset($errores)) : ?>
                 <ul>
                     <?php foreach ($errores as $error) : ?>
@@ -65,7 +65,12 @@
                                 <td><?= $item->id ?></td>
                                 <td><?= $item->nombre ?></td>
                                 <?php if (isset($this->session->editar)) : ?>
-                                    <td><input type="text" id="porcentajes" class="fadeIn second" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                    <?php if($item->porcentaje==0) : ?>
+                                        <td><input type="text" id="porcentajes" class="fadeIn second perc errorInput" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                    <?php else : ?>
+                                        <td><input type="text" id="porcentajes" class="fadeIn second perc" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                    <?php endif; ?>
+
                                     <td><a href="<?= site_url('Admin/eliminarItem/' . $item->id); ?>"><i class="far fa-trash-alt"></i></a></td>
                                 <?php else : ?>
                                     <td><?= $item->porcentaje ?></td>
@@ -75,6 +80,10 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+            
+            <?php if (isset($this->session->editar)) : ?>
+                <p id="js_porcentaje"></p>
+            <?php endif ?>        
         </form>
 
         <!-- Modal -->
@@ -94,7 +103,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Añadir</button>
+                            <button type="submit" id="anadirModal" class="btn btn-primary">Añadir</button>
                         </div>
                     </div>
                 </div>
