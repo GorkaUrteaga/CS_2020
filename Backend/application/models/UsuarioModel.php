@@ -57,7 +57,7 @@ class UsuarioModel extends CI_Model
         try {
             $data = array(
                 'activado' => true
-            );            
+            );
             $this->db->where('email', $email);
             $this->db->update('usuario', $data);
 
@@ -68,4 +68,82 @@ class UsuarioModel extends CI_Model
 
         return $ok;
     }
+
+    public function generarCodigoRecuperacion($email)
+    {
+        $ok = true;
+        $permitted_chars = '0123456789ABCDEFGIJKLMNOPQRSTUVWXYZ';
+        $codigo = 'TEST1';
+
+        $time = time();
+        $timeOut = 0;
+        try {
+
+            do
+            {
+                $codigo = substr(str_shuffle($permitted_chars), 0, 5);
+                $this->db->where('codigo_recuperacion',$codigo);
+                $q = $this->db->get('usuario');
+                $numRows = $q->num_rows();
+                $timeOut = time();
+            }while($numRows > 0 && ($timeOut - $time < 10));
+
+            if($time - $timeOut > 10)
+            {
+                $ok = false;
+            }
+
+            if($ok)
+            {
+                $data = array(
+                    'codigo_recuperacion' => $codigo
+                );
+                $this->db->where('email', sha1($email));
+                $this->db->update('usuario', $data);
+    
+                $ok = ($this->db->affected_rows() != 1) ? false : true;
+            }
+            
+        } catch (Exception $e) {
+            $ok = false;
+        }
+
+        return $ok?$codigo:null;
+
+    }
+
+    public function comprobarCodigoRecuperacion($codigo)
+    {
+        $array = array('codigo_recuperacion' => $codigo);
+        $this->db->from('usuario');
+        $this->db->where($array);
+        $q = $this->db->get();
+        if (count($q->result_array()) != 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function cambiarContrasena($email, $password)
+    {
+        $ok = false;
+        try
+        {
+            $data = array(
+                'password' => $password,
+                'codigo_recuperacion' => null
+            );
+            $this->db->where('email', $email);
+            $this->db->update('usuario', $data);
+
+            $ok = ($this->db->affected_rows() != 1) ? false : true;
+        }catch(Exception $ex)
+        {
+            $ok = false;
+        }
+
+        return $ok;
+    }
+
 }

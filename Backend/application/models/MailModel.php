@@ -46,11 +46,8 @@ class MailModel extends CI_Model
 
     public function enviarCorreoRecuperarContrasena($email, $codigo)
     {
-        $sha1email = sha1($email);
         $body = BODY . "<br><br>CÓDIGO: $codigo<br><br>" . FOOTERMAIL;
         $subject = SUBJECT;
-
         return $this->enviarCorreo($email, $subject, $body);
-
     }
 }

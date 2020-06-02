@@ -11,6 +11,7 @@ CREATE TABLE USUARIO
 	es_admin BOOLEAN not null DEFAULT false,
 	perfil_completado BOOLEAN not null DEFAULT false, /* Boolea per indicar si l'usuari ja ha omplert el seu perfil */
 	activado BOOLEAN not null DEFAULT false,
+	codigo_recuperacion VARCHAR(5),
 	riesgo INT 
 );
 

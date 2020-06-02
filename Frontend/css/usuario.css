@@ -1,0 +1,23 @@
+header {
+  background-color: #45B69C;
+  padding: 10px;
+  height: 50px;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .titulo {
+  font-size: 16px;
+}
+
+header i {
+  font-size: 40px;
+}
+/*# sourceMappingURL=usuario.css.map */

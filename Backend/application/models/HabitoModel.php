@@ -20,6 +20,18 @@ class HabitoModel extends CI_Model
         return $q->result_array();
     }
 
+    public function obtenerHabitosUsuario()
+    {
+        $this->db->from('vw_habito_respuestas_usuario');
+        $q = $this->db->get();
+        if (count($q->result_array()) == 0)
+        {
+            return null;
+        }
+
+        return $q->result_array();
+    }
+
     public function guardarHabitos($items)
     {
         $respuestas = ['Si' => 'si' , 'No' => 'no', 'A veces' => 'a_veces'];

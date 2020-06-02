@@ -35,11 +35,15 @@
 
             <div class="d-flex flex-column justify-content-between h-100">
                 <form method="post" action="<?= site_url('Login/recuperarContrasena'); ?>">
-                    <?php if (!isset($recuperar)) : ?>
-                        <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
-                    <?php else : ?>
+                    <?php if (!isset($this->session->recuperar)) : ?>
+                        <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo" required>
+                    <?php elseif ($this->session->recuperar == 1) : ?>
                         <p>Introduce el código que te hemos enviado al correo.</p>
-                        <input type="text" id="codigo" class="fadeIn second" name="codigo" placeholder="Codigo">
+                        <input type="text" id="codigo" class="fadeIn second" name="codigo" placeholder="Código" required>
+                    <?php elseif ($this->session->recuperar == 2) : ?>
+                        <p>Introduce la nueva contraseña.</p>
+                        <input type="password" id="password" class="fadeIn second" name="password" placeholder="Contrasseña" required>
+                        <input type="password" id="confirmar_password" class="fadeIn second" name="confirmar_password" placeholder="Confirmar contrasseña" required>
                     <?php endif; ?>
                     <input type="submit" class="fadeIn fourth" value="Recuperar">
                 </form>
