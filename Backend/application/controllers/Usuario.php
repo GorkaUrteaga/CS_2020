@@ -19,13 +19,37 @@ class Usuario extends REST_Controller{
         $usuario = $this->post('usuario');
         $status = 0;
         $message = null;
+        //$habitos = 'aaa';
+        $habitos = $this->HabitoModel->obtenerHabitosUsuario($usuario);
 
-        $status = $this->HabitoModel->obtenerHabitosUsuario($usuario);
+        $status = $habitos == null? 0: 1;
 
         $this->response(
             array(
                 "status" => $status,
-                "message" => $status?'Se han modificado los habitos.':'No se han podido guardar los habitos.'
+                "message" => $status?'Habitos recogidos correctamente.':'No se han podido recoger los habitos.',
+                "data" => $habitos
+            ), 
+            REST_Controller::HTTP_OK
+        );
+    }
+
+    public function guardarHabitosPerfil_post()
+    {
+        $habitos = json_decode($this->post('habitos'));
+        $respuestas = json_decode($this->post('respuestas'));
+        $usuario = $this->post('usuario');
+        $status = 0;
+        $message = null;
+        
+        $habitos = $this->HabitoModel->guardarHabitosUsuario($usuario, $habitos, $respuestas);
+
+        $status = $habitos == null? 0: 1;
+
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => $status?'Se han modificado los habitos del usuario.':'No se han podido modificar los habitos del usuario.'
             ), 
             REST_Controller::HTTP_OK
         );

@@ -1,12 +1,18 @@
+$primary-color: #45B69C;
+$secondary-color: #D8DDEF;
+$hover-color: #7293A0;
+$button-color: #21D19F;
+$error-color: tomato;
+$correct-color: rgb(18, 133, 18);
+
 .error{
-    color: tomato;
+    color: $error-color;
 }
 
 .correcto{
-    color: rgb(18, 133, 18);
+    color: $correct-color;
 }
 
 .message{
-    //font-weight: bold;
     font-size: 30px;
 }

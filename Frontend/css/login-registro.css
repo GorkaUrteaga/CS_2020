@@ -1,5 +1,17 @@
+.error {
+  color: tomato;
+}
+
+.correcto {
+  color: #128512;
+}
+
+.message {
+  font-size: 30px;
+}
+
 html {
-  background-color: #56baed;
+  background-color: #45B69C;
 }
 
 body {
@@ -87,15 +99,11 @@ h2.active {
   border-bottom: 2px solid #5fbae9;
 }
 
-input:hover {
-  background-color: red;
-}
-
 /* FORM TYPOGRAPHY*/
 input[type=button],
 input[type=submit],
 input[type=reset] {
-  background-color: #56baed;
+  background-color: #21D19F;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -115,7 +123,7 @@ input[type=reset] {
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover {
-  background-color: #1482b9;
+  background-color: #7293A0;
 }
 
 input[type=button]:active,
@@ -144,7 +152,7 @@ input[type=text], input[type=password] {
 
 input[type=text]:focus, input[type=password]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid #21D19F;
 }
 
 input[type=text]:placeholder {

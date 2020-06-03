@@ -1,3 +1,15 @@
+.error {
+  color: tomato;
+}
+
+.correcto {
+  color: #128512;
+}
+
+.message {
+  font-size: 30px;
+}
+
 body {
   height: 100vh;
   width: 100vw;
@@ -51,7 +63,7 @@ body header ul li {
 }
 
 body header a {
-  color: #2C3034;
+  color: #D8DDEF;
 }
 
 body header a:hover {
@@ -77,6 +89,19 @@ body .container-fluid {
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
+}
+
+body .container-fluid .btn {
+  background-color: #21D19F;
+  border-color: #21D19F;
+}
+
+body .container-fluid a {
+  color: #21D19F;
+}
+
+body .container-fluid a:hover {
+  color: #7293A0;
 }
 
 body .container-fluid table {

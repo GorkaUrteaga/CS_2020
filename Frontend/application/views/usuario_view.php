@@ -7,8 +7,8 @@
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="<?= base_url('css/usuario.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('css/usuario.css'); ?>">
     <script src="https://kit.fontawesome.com/c2dea4f87e.js" crossorigin="anonymous"></script>
 </head>
 
@@ -19,11 +19,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <header>
-        <h5 class="titulo">Cabezera Usuario X</h5>
-        <i class="fas fa-user-circle"></i>
+        <a href=""><i class="fas fa-calendar-alt"></i></a>
+        <a href=""><i class="fas fa-user-circle"></i></a>
+        <a href="<?= site_url('Login') ?>"><i class="fas fa-sign-out-alt"></i></a>
     </header>
-
-
 
 </body>
 
