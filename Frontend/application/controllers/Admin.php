@@ -8,16 +8,15 @@ class Admin extends CI_Controller
     private $baseUrl = wsUrl . 'Admin/';
     private $ch = null;
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
-        
-        if (!isset($this->session->usuario) || !$this->session->usuario->es_admin) 
-        {
+
+        if (!isset($this->session->usuario) || !$this->session->usuario->es_admin) {
             redirect('Login');
         }
 
         $this->ch = curl_init();
-
     }
 
     public function index($mantenimiento = null)
@@ -25,11 +24,9 @@ class Admin extends CI_Controller
         $this->session->unset_userdata('editar');
         $this->load->view('admin_view');
 
-        if($mantenimiento == null)
-        {
+        if ($mantenimiento == null) {
             $mantenimiento = $this->session->vista;
-            if($mantenimiento == null)
-            {
+            if ($mantenimiento == null) {
                 $mantenimiento = 'sintomas';
             }
         }
@@ -40,7 +37,7 @@ class Admin extends CI_Controller
         $ch = $this->ch;
         $response = '';
         $request = '';
-        
+
         //Cridem a la funció WS que ens retorna si es correcte o no el login i si ho es el guardem en session i continuem depenent del rol cap a un lloc o un altre
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
@@ -49,37 +46,34 @@ class Admin extends CI_Controller
         curl_setopt($ch, CURLOPT_HEADER, 0); //0 per evitar que el request doni la capsalera
 
         $response = curl_exec($ch);
-        $json = json_decode ($response);
+        $json = json_decode($response);
         //var_dump($url);
         //var_dump($response);
         //exit;
         $items = $json->data;
 
         $maxId =  1;
-        if($items != null)
-        {
-            foreach ($items as $item)
-            {
-                if($item->id > $maxId)
-                {
+        if ($items != null) {
+            foreach ($items as $item) {
+                if ($item->id > $maxId) {
                     $maxId = $item->id;
                 }
-            } 
+            }
         }
 
-        $this->session->set_userdata('items',$items);
-        $this->session->set_userdata('maxId',$maxId);
+        $this->session->set_userdata('items', $items);
+        $this->session->set_userdata('maxId', $maxId);
 
         $data = ['items' => $items];
 
-        $this->session->set_userdata('vista',$mantenimiento);
+        $this->session->set_userdata('vista', $mantenimiento);
 
-        $this->load->view($mantenimiento."_view",$data);
+        $this->load->view($mantenimiento . "_view", $data);
     }
 
     public function cancelarEdicion()
     {
-        Redirect('Admin/index/'.$this->session->vista);
+        Redirect('Admin/index/' . $this->session->vista);
     }
 
     private function cargarVistas()
@@ -87,18 +81,17 @@ class Admin extends CI_Controller
         $items = $this->session->items;
         $data = ['items' => $items];
 
-        if($this->session->errores)
-        {
+        if ($this->session->errores) {
             $data['errores'] = $this->session->errores;
         }
 
         $this->load->view('admin_view');
-        $this->load->view($this->session->vista."_view",$data);
+        $this->load->view($this->session->vista . "_view", $data);
     }
 
     public function editarItems()
     {
-        $this->session->set_userdata('editar',true);
+        $this->session->set_userdata('editar', true);
         $items = $this->session->items;
         $data = ['items' => $items];
 
@@ -108,27 +101,19 @@ class Admin extends CI_Controller
     public function eliminarItem($idItem)
     {
         $items = $this->session->items;
-        $encontrado = false;
         $i = 0;
 
-        //echo count($items);
-        //exit;
-
-        while($i < count($items) && !$encontrado)
-        {
-            if($items[$i]->id == $idItem)
-            {
-                $encontrado = true;
-            }else{
-                $i++;
-            }
+        while ($i < count($items) && !($items[$i]->id == $idItem)) {
+            $i++;
         }
 
-        unset($items[$i]);
+        if ($i < count($items)) {
+            unset($items[$i]);
+            $items = array_merge($items);
+        }
 
-        $this->session->set_userdata('items',$items);
+        $this->session->set_userdata('items', $items);
         $this->cargarVistas();
-
     }
 
     public function addItem()
@@ -145,17 +130,16 @@ class Admin extends CI_Controller
             }
         );
 
-        if(empty($item)){
-            if($this->session->vista == 'sintomas')
-            {
+        if (empty($item)) {
+            if ($this->session->vista == 'sintomas') {
                 $item = (object) ['id' => $maxId, 'nombre' => $nombre, 'porcentaje' => 0];
-            }else{
+            } else {
                 $item = (object) ['id' => $maxId, 'nombre' => $nombre, 'si' => 0, 'no' => 0, 'a_veces' => 0];
             }
-            
+
             array_push($items, $item);
-            $this->session->set_userdata('maxId',$maxId);
-            $this->session->set_userdata('items',$items);
+            $this->session->set_userdata('maxId', $maxId);
+            $this->session->set_userdata('items', $items);
         }
 
         $this->cargarVistas();
@@ -172,37 +156,36 @@ class Admin extends CI_Controller
         $suma = 0;
         $todoOk = true;
         $pos = -1;
-        
+
         $porcentajes = $this->input->post('porcentajes[]');
         $items = $this->session->items;
 
-        if(!empty($porcentajes))
-        {
-            $suma = array_sum ($porcentajes);
-            $pos = array_search (0 , $porcentajes);
+        if (!empty($porcentajes)) {
+            $suma = array_sum($porcentajes);
+            $pos = array_search(0, $porcentajes);
         }
 
-        if(empty($items) || ($pos != null && $pos >= 0) || $suma != 100)
-        {
+        if (empty($items) || ($pos != null && $pos >= 0) || $suma != 100) {
             //array_push($arrayErrores, 'La suma de todos los porcentajes debe ser 100.');
             //array_push($arrayErrores, 'Todos los sintomas deben tener un porcentaje mayor a 0.');
             $todoOk = false;
         }
 
-        if(!$todoOk)
-        {
+        if (!$todoOk) {
             //$this->session->set_flashdata('errores', $arrayErrores);
             $this->cargarVistas();
-        }else{
+        } else {
             //Ningun error guardamos
             //Primero, eliminamos aquellos que ya no estan.
             //Insertamos y modificamos.
+
             $i = 0;
-            foreach($items as $item)
-            {
+            foreach ($items as $item) {
                 $item->porcentaje = $porcentajes[$i];
                 $i++;
             }
+            //var_dump($items);
+            //exit;
 
             $request = 'sintomas=' . json_encode($items);
 
@@ -213,12 +196,10 @@ class Admin extends CI_Controller
             curl_setopt($ch, CURLOPT_HEADER, 0);
 
             $response = curl_exec($ch);
-            $json = json_decode ($response);
+            $json = json_decode($response);
 
             Redirect('Admin');
-
         }
-
     }
 
     public function guardarHabito()
@@ -237,20 +218,16 @@ class Admin extends CI_Controller
         $porcAveces = $this->input->post('porcentajes_a_veces[]');
         $items = $this->session->items;
 
-        if(empty($items) || empty($porcNo) || empty($porcAveces))
-        {
+        if (empty($items) || empty($porcNo) || empty($porcAveces)) {
             $todoOk = false;
         }
 
-        if(!$todoOk)
-        {
+        if (!$todoOk) {
             $this->cargarVistas();
-        }else
-        {
+        } else {
             //Guardamos
             $i = 0;
-            foreach($items as $item)
-            {
+            foreach ($items as $item) {
                 $item->si = $porcSi[$i];
                 $item->no = $porcNo[$i];
                 $item->a_veces = $porcAveces[$i];
@@ -266,12 +243,10 @@ class Admin extends CI_Controller
             curl_setopt($ch, CURLOPT_HEADER, 0);
 
             $response = curl_exec($ch);
-            $json = json_decode ($response);
+            $json = json_decode($response);
             var_dump($json);
             //exit;
             Redirect('Admin');
         }
-
     }
-
 }
