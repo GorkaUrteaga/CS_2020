@@ -103,7 +103,6 @@ class Admin extends CI_Controller
         $items = $this->session->items;
         $i = 0;
 
-<<<<<<< HEAD
         while($i < count($items) && !($items[$i]->id == $idItem))
         {
             $i++;
@@ -115,16 +114,6 @@ class Admin extends CI_Controller
         }
 
         
-=======
-        while ($i < count($items) && !($items[$i]->id == $idItem)) {
-            $i++;
-        }
-
-        if ($i < count($items)) {
-            unset($items[$i]);
-            $items = array_merge($items);
-        }
->>>>>>> 47d560f9a318290a6a9f2542250ac7efea58383d
 
         $this->session->set_userdata('items', $items);
         $this->cargarVistas();
