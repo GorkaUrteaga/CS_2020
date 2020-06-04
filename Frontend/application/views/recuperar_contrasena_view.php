@@ -9,6 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
+    <script type="text/javascript" src="<?= base_url('js/registro.js'); ?>"></script>
 </head>
 
 <body>
@@ -27,11 +28,11 @@
                 <img src="<?= base_url('imgs/health_icon.png') ?>" id="icon" alt="COVID-19" />
             </div>
             <h4 class="tittle">Recuperar Contraseña</h4>
-
-            <?php if (isset($error)) : ?>
-                <p class="error"><?= $error ?></p>
-            <?php endif; ?>
-
+            <p class="error">
+                <?php if (isset($error)) : ?>
+                    <?= $error ?>
+                <?php endif; ?>
+            </p>
 
             <div class="d-flex flex-column justify-content-between h-100">
                 <form method="post" action="<?= site_url('Login/recuperarContrasena'); ?>">
@@ -43,9 +44,10 @@
                     <?php elseif ($this->session->recuperar == 2) : ?>
                         <p>Introduce la nueva contraseña.</p>
                         <input type="password" id="password" class="fadeIn second" name="password" placeholder="Contrasseña" required>
-                        <input type="password" id="confirmar_password" class="fadeIn second" name="confirmar_password" placeholder="Confirmar contrasseña" required>
+                        <input type="password" id="confirmacion_password" class="fadeIn second" name="confirmar_password" placeholder="Confirmar contrasseña" required>
                     <?php endif; ?>
-                    <input type="submit" class="fadeIn fourth" value="Recuperar">
+                    <p id="warning">CUIDADO! Estas escribiendo en mayusculas.</p>
+                    <input id="registrar" type="submit" class="fadeIn fourth" value="Recuperar">
                 </form>
 
                 <div id="formFooter">

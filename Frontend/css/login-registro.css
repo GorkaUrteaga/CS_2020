@@ -186,4 +186,8 @@ input[type=text]:placeholder {
     position: relative;
   }
 }
+
+.custom-control {
+  margin: 0 auto;
+}
 /*# sourceMappingURL=login-registro.css.map */

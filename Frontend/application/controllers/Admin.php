@@ -108,23 +108,20 @@ class Admin extends CI_Controller
     public function eliminarItem($idItem)
     {
         $items = $this->session->items;
-        $encontrado = false;
         $i = 0;
 
-        //echo count($items);
-        //exit;
-
-        while($i < count($items) && !$encontrado)
+        while($i < count($items) && !($items[$i]->id == $idItem))
         {
-            if($items[$i]->id == $idItem)
-            {
-                $encontrado = true;
-            }else{
-                $i++;
-            }
+            $i++;
         }
 
-        unset($items[$i]);
+        if($i<count($items)){
+            unset($items[$i]);
+            var_dump($items);
+            $items = array_merge($items); 
+        }
+
+        
 
         $this->session->set_userdata('items',$items);
         $this->cargarVistas();

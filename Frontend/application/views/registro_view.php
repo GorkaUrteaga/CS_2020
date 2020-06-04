@@ -9,6 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css'); ?>">
+    <script type="text/javascript" src="<?= base_url('js/registro.js'); ?>"></script>
 </head>
 
 <body>
@@ -37,7 +38,8 @@
                     <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
                     <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
                     <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="Confirmación contraseña">
-                    <input type="submit" class="fadeIn fourth" value="Registrate">
+                    <p id="warning">CUIDADO! Estas escribiendo en mayusculas.</p>
+                    <input id="registrar" type="submit" class="fadeIn fourth" value="Registrate">
                 </form>
 
                 <!-- Logeate -->

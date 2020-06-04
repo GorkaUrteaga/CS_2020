@@ -9,6 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/usuario.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
+    
 </head>
 
 <body>
