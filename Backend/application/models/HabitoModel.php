@@ -15,6 +15,7 @@ class HabitoModel extends CI_Model
     public function getAll()
     {
         $this->db->from('vw_habito_respuestas');
+        $this->db->order_by('id');
         $q = $this->db->get();
         if (count($q->result_array()) == 0) {
             return null;
@@ -66,8 +67,6 @@ class HabitoModel extends CI_Model
                 $r->id = $respuesta['id'];
                 $r->respuesta = $respuesta['respuesta'];
 
-
-
                 $this->db->from('respuesta_habito_usuario');
                 $this->db->where('id_usuario', $idUsuario);
                 $this->db->where('id_habito', $habito['id']);
@@ -101,7 +100,7 @@ class HabitoModel extends CI_Model
             $this->db->trans_begin();
 
             foreach ($items as $item) {
-                $query = $this->db->get_where('habito', array('id' => $item->id));
+                $query = $this->db->get_where('habito', array('LOWER(nombre)' => strtolower(trim($item->nombre))));
 
                 if ($query->num_rows() == 0) {
                     //Insert
@@ -125,13 +124,15 @@ class HabitoModel extends CI_Model
                 } else {
                     //Update
 
-                    array_push($ids, $item->id);
+                    $idUpdate = $query->result_array()[0]['id'];
+
+                    array_push($ids, $idUpdate);
 
                     foreach ($respuestas as $key => $res) {
                         $data = array(
                             'porcentaje' => $item->$res
                         );
-                        $this->db->where('id_habito', $item->id);
+                        $this->db->where('id_habito', $idUpdate);
                         $this->db->where('respuesta', $key);
                         $this->db->update('respuesta_habito', $data);
                     }
