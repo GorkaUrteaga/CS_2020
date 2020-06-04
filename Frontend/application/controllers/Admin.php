@@ -117,7 +117,6 @@ class Admin extends CI_Controller
 
         if($i<count($items)){
             unset($items[$i]);
-            var_dump($items);
             $items = array_merge($items); 
         }
 
