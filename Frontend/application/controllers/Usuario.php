@@ -20,11 +20,44 @@ class Usuario extends CI_Controller
 
     public function index()
     {
-        
         //Comprovamos si ya ha llenado toda la información del perfil para mandarlo a la vista del perfil o no
         $this->load->view('usuario_view');
 
-        $this->perfilUsuario();
+        $this->comprobarPerfilUsuario();
+
+
+        //$this->perfilUsuario();
+
+    }
+
+    public function comprobarPerfilUsuario()
+    {
+        $action = 'comprobarPerfilUsuario';
+        $url = $this->baseUrl . $action;
+        $ch = $this->ch;
+        $response = '';
+        $request = 'usuario=' . $this->session->usuario->id;
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        $response = curl_exec($ch);
+        $json = json_decode($response);
+
+        $habitosSinResponder = $json->status;
+
+        if($habitosSinResponder)
+        {
+            $this->perfilUsuario();
+        }else{
+            //Aquí redirigimos al calendario
+            
+            echo "TODO BIEN";
+            exit;
+        }
 
     }
 

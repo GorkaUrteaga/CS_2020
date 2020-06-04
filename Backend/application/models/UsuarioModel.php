@@ -30,7 +30,9 @@ class UsuarioModel extends CI_Model
         $this->db->where($array);
         $q = $this->db->get();
         if (count($q->result_array()) == 0)
+        {
             return null;
+        }            
 
         return $q->result_array()[0];
     }
@@ -144,6 +146,57 @@ class UsuarioModel extends CI_Model
         }
 
         return $ok;
+    }
+
+    /**
+     * Funcion que devuelve false si ha respondido toda las preguntas y true si tiene alguna por contestar
+     */
+    public function comprobarPerfil($usuario)
+    {
+        //return false;
+        $habitosSinResponder = false;
+        
+        try
+        {
+            $this->db->select('count(*) as qHabitos');
+            $this->db->from('habito');
+            $q = $this->db->get();
+
+            if (count($q->result_array()) == 0)
+            {
+                return false;
+            }           
+
+            $qHabitos = $q->result_array()[0]['qHabitos'];
+
+            if ($qHabitos == null){
+                return false;
+            }
+            
+            $this->db->select('count(*) as qRespuestas');
+            $this->db->where('id_usuario', $usuario);
+            $this->db->from('respuesta_habito_usuario');
+            $q = $this->db->get();
+
+            if (count($q->result_array()) == 0)
+            {
+                return true;
+            }       
+            
+            $qRespuestas = $q->result_array()[0]['qRespuestas'];
+            
+            if($qRespuestas != $qHabitos)
+            {
+                $habitosSinResponder = true;
+            }
+
+        }catch(Exception $ex)
+        {
+            $habitosSinResponder = false;
+        }
+
+        return $habitosSinResponder;
+        
     }
 
 }
