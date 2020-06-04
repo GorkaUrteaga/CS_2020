@@ -9,6 +9,7 @@ class Usuario extends REST_Controller{
         parent::__construct();
         $this->load->model('SintomaModel');
         $this->load->model('HabitoModel');
+        $this->load->model('UsuarioModel');
     }
 
     /**
@@ -53,6 +54,24 @@ class Usuario extends REST_Controller{
             ), 
             REST_Controller::HTTP_OK
         );
+    }
+
+    public function comprobarPerfilUsuario_post()
+    {
+        $usuario = $this->post('usuario');
+
+        //$habitosSinResponder = false;
+
+        $habitosSinResponder = $this->UsuarioModel->comprobarPerfil($usuario);
+
+        $this->response(
+            array(
+                "status" => $habitosSinResponder,
+                "message" => $habitosSinResponder?'Se tienen que responder los habitos del perfil.':'Todos los habitos se han respondido.'
+            ), 
+            REST_Controller::HTTP_OK
+        );
+
     }
 
 }
