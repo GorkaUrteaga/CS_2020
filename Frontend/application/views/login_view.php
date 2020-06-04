@@ -37,8 +37,8 @@
             <div class="d-flex flex-column justify-content-between h-100">
                 <!-- Login Form -->
                 <form method="post" action="<?= site_url('Login/logear'); ?>">
-                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo" required>
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" required>
                     <!--<label for="show_pass">Mostrar Contraseña</label><input type="checkbox" id="show_pass">-->
                     <p id="warning">CUIDADO! Estas escribiendo en mayusculas.</p>
                     <div class="custom-control custom-checkbox d-flex justify-content-center w-50 text-center my-1">

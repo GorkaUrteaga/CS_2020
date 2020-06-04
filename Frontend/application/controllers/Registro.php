@@ -40,7 +40,6 @@ class Registro extends CI_Controller
         {
             //Redirigimos a la pagina de login indicando el error
             Redirect('Registro');
-
         }
 
         $request = 'email=' . $email . '&' . 'password=' . $password;

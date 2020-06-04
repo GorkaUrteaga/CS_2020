@@ -35,9 +35,9 @@
             <div class="d-flex flex-column justify-content-between h-100">
                 <!-- Login Form -->
                 <form method="post" action="<?= site_url('Registro/registrar'); ?>">
-                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo">
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
-                    <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="Confirmación contraseña">
+                    <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo" required>
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" required>
+                    <input type="password" id="confirmacion_password" class="fadeIn third" name="confirmacion_password" placeholder="Confirmación contraseña" required>
                     <p id="warning">CUIDADO! Estas escribiendo en mayusculas.</p>
                     <input id="registrar" type="submit" class="fadeIn fourth" value="Registrate">
                 </form>

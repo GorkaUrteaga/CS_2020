@@ -19,7 +19,7 @@ class Registro extends REST_Controller
         $mail = $this->post('email');
         $pass = $this->post('password');
 
-        $us = $this->UsuarioModel->getUsuarioPorCorreo(md5($mail));
+        $us = $this->UsuarioModel->getUsuarioPorCorreo(sha1($mail));
 
         /*
         ESTATS

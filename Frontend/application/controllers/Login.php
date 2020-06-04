@@ -32,49 +32,70 @@ class Login extends CI_Controller
      */
     public function logear()
     {
+        $todoOk = true;
         $action = 'login';
         $url = $this->baseUrl . $action;
         $ch = $this->ch;
-        $email = sha1($this->input->post('email'));
-        $password = sha1($this->input->post('password'));
+        $email = trim($this->input->post('email'));
+        $password = trim($this->input->post('password'));
         $response = "";
 
-        $request = 'email=' . $email . '&' . 'password=' . $password;
-        //Cridem a la funció WS que ens retorna si es correcte o no el login i si ho es el guardem en session i continuem depenent del rol cap a un lloc o un altre
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HEADER, 0); //0 per evitar que el request doni la capsalera
+        if($password == "" || $email == "")
+        {
+            $todoOk = false;
+        }
 
-        $response = curl_exec($ch);
+        if($todoOk){
+            
+            $email = sha1($email);
+            $password = sha1($password);
+    
+            $request = 'email=' . $email . '&' . 'password=' . $password;
+            //Cridem a la funció WS que ens retorna si es correcte o no el login i si ho es el guardem en session i continuem depenent del rol cap a un lloc o un altre
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HEADER, 0); //0 per evitar que el request doni la capsalera
+    
+            $response = curl_exec($ch);
+    
+            $json = json_decode($response);
+    
+            $usuario = $json->data;
+    
 
-        $json = json_decode($response);
 
-        $usuario = $json->data;
-
-        if ($usuario != null) {
-            //Si el usuario existe redirigimos en base a su rol
-            //Guardamos el usuario en session
-            $this->session->set_userdata('usuario', $usuario);
-
-            if($usuario->es_admin)
+            if($usuario == null || $usuario->activado)
             {
-                Redirect('Admin');
-            }else{
-                //echo "Hellooooo";
-                //exit;
-                Redirect('Usuario');
+                $todoOk = false;
+            }
+    
+            if ($todoOk) {
+                //Si el usuario existe redirigimos en base a su rol
+                //Guardamos el usuario en session
+                $this->session->set_userdata('usuario', $usuario);
+    
+                if($usuario->es_admin)
+                {
+                    Redirect('Admin');
+                }else{
+                    Redirect('Usuario');
+                }
                 
+            } else {
+                //Enviamos a login con mensaje de error correo o contrasseña incorrectos
+                $message = $json->message;
+                
+                $data = ['error' => $message];
+                $this->load->view('login_view', $data);
             }
 
-            
-        } else {
-            //Enviamos a login con mensaje de error correo o contrasseña incorrectos
-            $message = $json->message;
-            $data = ['error' => $message];
+        }else{
+            $data = ['error' => "El email y la contraseña no pueden estar vacios!"];
             $this->load->view('login_view', $data);
         }
+        
     }
 
     public function recuperarContrasena()
