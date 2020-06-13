@@ -66,9 +66,9 @@
                                 <td><?= $item->nombre ?></td>
                                 <?php if (isset($this->session->editar)) : ?>
                                     <?php if($item->porcentaje==0) : ?>
-                                        <td><input type="text" id="porcentajes" class="fadeIn second perc errorInput" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                        <td><input type="number" id="porcentajes" class="fadeIn second perc errorInput" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
                                     <?php else : ?>
-                                        <td><input type="text" id="porcentajes" class="fadeIn second perc" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
+                                        <td><input type="number" id="porcentajes" class="fadeIn second perc" name="porcentajes[]" value="<?= $item->porcentaje ?>" placeholder="<?= $item->porcentaje ?>"></td>
                                     <?php endif; ?>
 
                                     <td><a href="<?= site_url('Admin/eliminarItem/' . $item->id); ?>"><i class="far fa-trash-alt"></i></a></td>

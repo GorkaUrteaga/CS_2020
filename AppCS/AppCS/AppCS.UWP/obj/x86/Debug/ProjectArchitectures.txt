@@ -1,0 +1,1 @@
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS.UWP\AppCS.UWP.csproj;x86

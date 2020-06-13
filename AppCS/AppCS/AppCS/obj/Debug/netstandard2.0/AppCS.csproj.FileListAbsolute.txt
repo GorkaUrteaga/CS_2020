@@ -1,0 +1,12 @@
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\bin\Debug\netstandard2.0\AppCS.deps.json
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\bin\Debug\netstandard2.0\AppCS.dll
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\bin\Debug\netstandard2.0\AppCS.pdb
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.csproj.CoreCompileInputs.cache
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.AssemblyInfoInputs.cache
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.AssemblyInfo.cs
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\XamlC.stamp
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.dll
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.pdb
+D:\CS_2020\CS_2020\AppCS\AppCS\AppCS\obj\Debug\netstandard2.0\AppCS.csprojAssemblyReference.cache

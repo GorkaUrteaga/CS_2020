@@ -16,10 +16,6 @@ class Login extends CI_Controller
 
     public function index()
     {
-        //echo password_hash("marc199908", PASSWORD_BCRYPT);
-        //echo wsUrl;
-        //exit;
-        //$this->load->view('admin_view');
         $this->session->sess_destroy();
         $this->load->view('login_view');
     }
@@ -62,11 +58,13 @@ class Login extends CI_Controller
     
             $json = json_decode($response);
     
+            if($json == null){
+                Redirect('ErrorConexion');
+            }
+
             $usuario = $json->data;
-    
 
-
-            if($usuario == null || $usuario->activado)
+            if($usuario == null || !$usuario->activado)
             {
                 $todoOk = false;
             }
@@ -156,6 +154,10 @@ class Login extends CI_Controller
 
             $json = json_decode($response);
 
+            if($json == null){
+                Redirect('ErrorConexion');
+            }
+
             if ($json != null && !$json->status) {
                 $error = $json->message;
                 $data = ['error' => $error];
@@ -181,7 +183,11 @@ class Login extends CI_Controller
             $response = curl_exec($ch);
             
             $json = json_decode($response);
-            //var_dump($json);
+
+            if($json == null){
+                Redirect('ErrorConexion');
+            }
+
             if ($json != null && !$json->status) {
                 $error = $json->message;
                 $data = ['error' => $error];

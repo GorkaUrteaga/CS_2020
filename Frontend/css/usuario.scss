@@ -1,44 +1,149 @@
 @import 'comun';
 
-header{
+header {
     background-color: $primary-color;
     padding: 10px;
     height: 50px;
+    width: 100vw;
+    top: 0px;
+
+    position: fixed;
+    z-index: 10;
 
     display: flex !important;
     justify-content: space-between;
     align-items: center;
-    
-    .titulo
-    {
+
+    .titulo {
         font-size: 16px;
     }
 
-    i{
+    i {
         font-size: 36px;
     }
 
-    a{
+    a {
         color: $secondary-color;
         //color: $button-color;
     }
 
-    a:hover{
+    a:hover {
         color: $hover-color;
     }
 
 }
 
-.container-perfil{
+
+.container-perfil {
+    margin-top: 49px;
     padding-top: 20px;
 
-    .btn{
+    .btn {
         background-color: $button-color;
         border-color: $button-color;
     }
 
-    .btn:hover{
+    .btn:hover {
         background-color: $hover-color;
     }
 
+}
+
+.container-calendario {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+#table_calendario {
+    margin-top: 49px;
+    width: 100%;
+    background-color: $hover-color;
+
+    thead {
+
+        th:first-child span{
+            writing-mode: horizontal-tb;
+            -webkit-writing-mode: horizontal-tb;
+            -ms-writing-mode: horizontal-tb;
+        }
+
+        th span{
+            writing-mode: vertical-lr;
+            -webkit-writing-mode: vertical-lr;
+            -ms-writing-mode: vertical-lr;
+        }
+    }
+
+
+    .checkbox-calendario {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #fafafa;
+        border: 1px solid #cacece;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+        padding: 15px;
+        border-radius: 25%;
+        display: inline-block;
+        position: relative;
+        touch-action: manipulation;
+    }
+
+    .checkbox-calendario:active,
+    .checkbox-calendario:checked:active {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkbox-calendario:checked {
+        background-color: $primary-color;
+        border: 1px solid $secondary-color;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+        color: #99a1a7;
+    }
+
+}
+
+.saveCalendario{
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: $button-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    
+    i{
+        color: white;
+        transition: color 0.1s linear;
+    }
+    &:hover i{
+        color: $hover-color;
+        transition: color 0.1s linear;
+    }
+}
+
+/*
+.saveCalendario:link, .saveCalendario:visited, .saveCalendario:active {
+    text-decoration:none;
+}
+*/
+
+.footer-usuario{
+    margin-top: -20px;
+    height: 100px;
+    background-color: $secondary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    p{
+        text-align: center;
+        color: black;
+        font-weight: bold;
+        padding-right: 70px;
+    }
 }

@@ -1,0 +1,52 @@
+.covid{
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform: translateX(-50px) translateY(-50px);
+}
+
+.covid1, .covid2 {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	background-color: #A0A4B8;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+    animation: covidsalto 2.0s infinite ease-in-out;
+
+}
+
+.covid1 img{
+    height: 300px;
+    width: 300px;
+}
+.covid2 img{
+    height: 300px;
+    width: 300px;
+}
+
+.covid2{
+	background-color: #45B69C;
+}
+
+.covid1 {
+	
+	animation-delay: -1s;
+}
+
+.covid1 img, .covid2 img{
+	transform: scale(0.4);
+}
+
+@keyframes covidsalto {
+	0%, 100% { 
+	transform: scale(0.0);
+	} 
+	50%{ 
+	transform: scale(1.0);
+	}
+}

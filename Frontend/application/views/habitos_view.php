@@ -66,9 +66,9 @@
                                 <td><?= $item->id ?></td>
                                 <td><?= $item->nombre ?></td>
                                 <?php if (isset($this->session->editar)) : ?>
-                                    <td><input type="text" id="porcentajes_si" class="fadeIn second" name="porcentajes_si[]" value="<?= $item->si ?>" placeholder="<?= $item->si ?>"></td>
-                                    <td><input type="text" id="porcentajes_no" class="fadeIn second" name="porcentajes_no[]" value="<?= $item->no ?>" placeholder="<?= $item->no ?>"></td>
-                                    <td><input type="text" id="porcentajes_a_veces" class="fadeIn second" name="porcentajes_a_veces[]" value="<?= $item->a_veces ?>" placeholder="<?= $item->a_veces ?>"></td>
+                                    <td><input type="number" id="porcentajes_si" class="fadeIn second" name="porcentajes_si[]" value="<?= $item->si ?>" placeholder="<?= $item->si ?>"></td>
+                                    <td><input type="number" id="porcentajes_no" class="fadeIn second" name="porcentajes_no[]" value="<?= $item->no ?>" placeholder="<?= $item->no ?>"></td>
+                                    <td><input type="number" id="porcentajes_a_veces" class="fadeIn second" name="porcentajes_a_veces[]" value="<?= $item->a_veces ?>" placeholder="<?= $item->a_veces ?>"></td>
                                     <td><a href="<?= site_url('Admin/eliminarItem/' . $item->id); ?>"><i class="far fa-trash-alt"></i></a></td>
                                 <?php else : ?>
                                     <td><?= $item->si ?></td>

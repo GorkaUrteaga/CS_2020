@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/comun.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/login-registro.css'); ?>">
     <script type="text/javascript" src="<?= base_url('js/login.js'); ?>"></script>
+
 </head>
 
 <body>
@@ -32,7 +33,6 @@
             <?php if (isset($error)) : ?>
                 <p class="error"><?= $error ?></p>
             <?php endif; ?>
-
             
             <div class="d-flex flex-column justify-content-between h-100">
                 <!-- Login Form -->

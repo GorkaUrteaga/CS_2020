@@ -20,7 +20,7 @@ class Usuario extends REST_Controller{
         $usuario = $this->post('usuario');
         $status = 0;
         $message = null;
-        //$habitos = 'aaa';
+        
         $habitos = $this->HabitoModel->obtenerHabitosUsuario($usuario);
 
         $status = $habitos == null? 0: 1;
@@ -72,6 +72,67 @@ class Usuario extends REST_Controller{
             REST_Controller::HTTP_OK
         );
 
+    }
+
+    public function sintomas_get()
+    {
+        $status = 1;
+        $message = null;
+
+        $sintomas = $this->SintomaModel->getAll();
+        
+        if($sintomas == null)
+        {
+            $status = 0;
+            $message = 'No se han encontrado sintomas.';
+        }
+
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => $message,
+                "data" => $sintomas
+            ), 
+            REST_Controller::HTTP_OK
+        );
+
+    }
+
+    public function obtenerRiesgo_post()
+    {
+        $status = 1;
+        $message = null;
+        $usuario = $this->post('usuario');
+
+        $riesgo = $this->UsuarioModel->getRiesgo($usuario);
+
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => "Riesgo del usuario.",
+                "data" => $riesgo
+            ), 
+            REST_Controller::HTTP_OK
+        );
+
+    }
+
+    public function obtenerIntervalosSintomas_post()
+    {
+        $status = 1;
+        $message = null;
+        $usuario = $this->post('usuario');
+
+        $intervalos = $this->UsuarioModel->getIntervalos($usuario);
+
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => "Intervalos del usuario.",
+                "data" => $intervalos
+            ), 
+            REST_Controller::HTTP_OK
+        );
     }
 
 }

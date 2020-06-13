@@ -22,6 +22,14 @@
         <?php if (isset($this->session->error)) : ?>
             <p class="error"><?= $this->session->error ?></p>
         <?php endif; ?>
+        
+        <?php if ($riesgo > 70 ) : ?>
+            <p class="text-center" style="color: tomato;">Riesgo: <?=$riesgo?> %</p>
+        <?php elseif ($riesgo > 50 ) : ?>
+            <p class="text-center" style="color: #FFCC00;">Riesgo: <?=$riesgo?> %</p>
+        <?php else : ?>
+            <p class="text-center" style="color: rgb(18, 133, 18);">Riesgo: <?=$riesgo?> %</p>
+        <?php endif; ?>
 
         <p>Responde los siguientes habitos:</p>
         <form method="post" action="<?= site_url('Usuario/guardarPerfil'); ?>">
@@ -43,6 +51,7 @@
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
+            <br>
         </form>
     </div>
 

@@ -55,6 +55,10 @@ class Registro extends CI_Controller
         //Dependiendo de la respuesta mostramos un mensaje u otro, si todo es correcto redirigimos a login
         $json = json_decode ($response);
 
+        if($json == null){
+            Redirect('ErrorConexion');
+        }
+
         if($json->status != 1)
         {
             $errorMsg = $json->message;
@@ -86,6 +90,10 @@ class Registro extends CI_Controller
         $response = curl_exec($ch);
         //Dependiendo de la respuesta mostramos un mensaje u otro, si todo es correcto redirigimos a login
         $json = json_decode ($response);
+
+        if($json == null){
+            Redirect('ErrorConexion');
+        }
 
         $data = ['message' => $json->message, 'status' => $json->status];
         

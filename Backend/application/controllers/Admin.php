@@ -26,7 +26,7 @@ class Admin extends REST_Controller{
             $status = 0;
             $message = 'No se han encontrado sintomas.';
         }
-
+        
         $this->response(
             array(
                 "status" => $status,
@@ -51,7 +51,7 @@ class Admin extends REST_Controller{
         if($habitos == null)
         {
             $status = 0;
-            $message = 'No se han encontrado sintomas.';
+            $message = 'No se han encontrado habitos.';
         }
 
         $this->response(

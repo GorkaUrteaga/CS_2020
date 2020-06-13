@@ -30,13 +30,15 @@ class Admin extends CI_Controller
                 $mantenimiento = 'sintomas';
             }
         }
-
+        $this->load->view('loading_view');
 
         $action = $mantenimiento;
         $url = $this->baseUrl . $action;
         $ch = $this->ch;
         $response = '';
         $request = '';
+
+        //var_dump($mantenimiento);
 
         //Cridem a la funció WS que ens retorna si es correcte o no el login i si ho es el guardem en session i continuem depenent del rol cap a un lloc o un altre
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -47,9 +49,11 @@ class Admin extends CI_Controller
 
         $response = curl_exec($ch);
         $json = json_decode($response);
-        //var_dump($url);
-        //var_dump($response);
-        //exit;
+
+        if($json == null){
+            Redirect('ErrorConexion');
+        }
+
         $items = $json->data;
 
         $maxId =  1;
@@ -65,6 +69,14 @@ class Admin extends CI_Controller
         $this->session->set_userdata('maxId', $maxId);
 
         $data = ['items' => $items];
+
+        //Ocultem el loading
+        echo "<script>
+        function ocultarLoading() {
+            document.getElementById('covid').style.display = 'none';
+        }
+        setTimeout(ocultarLoading, 300);
+        </script>";
 
         $this->session->set_userdata('vista', $mantenimiento);
 
@@ -112,8 +124,6 @@ class Admin extends CI_Controller
             unset($items[$i]);
             $items = array_merge($items); 
         }
-
-        
 
         $this->session->set_userdata('items', $items);
         $this->cargarVistas();
@@ -187,8 +197,6 @@ class Admin extends CI_Controller
                 $item->porcentaje = $porcentajes[$i];
                 $i++;
             }
-            //var_dump($items);
-            //exit;
 
             $request = 'sintomas=' . json_encode($items);
 
@@ -200,7 +208,9 @@ class Admin extends CI_Controller
 
             $response = curl_exec($ch);
             $json = json_decode($response);
-
+            if($json == null){
+                Redirect('ErrorConexion');
+            }
             Redirect('Admin');
         }
     }
@@ -247,8 +257,10 @@ class Admin extends CI_Controller
 
             $response = curl_exec($ch);
             $json = json_decode($response);
-            var_dump($json);
-            //exit;
+            if($json == null){
+                Redirect('ErrorConexion');
+            }
+            
             Redirect('Admin');
         }
     }

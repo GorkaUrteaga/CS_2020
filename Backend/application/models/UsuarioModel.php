@@ -29,10 +29,9 @@ class UsuarioModel extends CI_Model
         $this->db->from('usuario');
         $this->db->where($array);
         $q = $this->db->get();
-        if (count($q->result_array()) == 0)
-        {
+        if (count($q->result_array()) == 0) {
             return null;
-        }            
+        }
 
         return $q->result_array()[0];
     }
@@ -81,37 +80,32 @@ class UsuarioModel extends CI_Model
         $timeOut = 0;
         try {
 
-            do
-            {
+            do {
                 $codigo = substr(str_shuffle($permitted_chars), 0, 5);
-                $this->db->where('codigo_recuperacion',$codigo);
+                $this->db->where('codigo_recuperacion', $codigo);
                 $q = $this->db->get('usuario');
                 $numRows = $q->num_rows();
                 $timeOut = time();
-            }while($numRows > 0 && ($timeOut - $time < 10));
+            } while ($numRows > 0 && ($timeOut - $time < 10));
 
-            if($time - $timeOut > 10)
-            {
+            if ($time - $timeOut > 10) {
                 $ok = false;
             }
 
-            if($ok)
-            {
+            if ($ok) {
                 $data = array(
                     'codigo_recuperacion' => $codigo
                 );
                 $this->db->where('email', sha1($email));
                 $this->db->update('usuario', $data);
-    
+
                 $ok = ($this->db->affected_rows() != 1) ? false : true;
             }
-            
         } catch (Exception $e) {
             $ok = false;
         }
 
-        return $ok?$codigo:null;
-
+        return $ok ? $codigo : null;
     }
 
     public function comprobarCodigoRecuperacion($codigo)
@@ -120,7 +114,7 @@ class UsuarioModel extends CI_Model
         $this->db->from('usuario');
         $this->db->where($array);
         $q = $this->db->get();
-        if (count($q->result_array()) != 0){
+        if (count($q->result_array()) != 0) {
             return true;
         }
 
@@ -130,8 +124,7 @@ class UsuarioModel extends CI_Model
     public function cambiarContrasena($email, $password)
     {
         $ok = false;
-        try
-        {
+        try {
             $data = array(
                 'password' => $password,
                 'codigo_recuperacion' => null
@@ -140,8 +133,7 @@ class UsuarioModel extends CI_Model
             $this->db->update('usuario', $data);
 
             $ok = ($this->db->affected_rows() != 1) ? false : true;
-        }catch(Exception $ex)
-        {
+        } catch (Exception $ex) {
             $ok = false;
         }
 
@@ -155,48 +147,63 @@ class UsuarioModel extends CI_Model
     {
         //return false;
         $habitosSinResponder = false;
-        
-        try
-        {
+
+        try {
             $this->db->select('count(*) as qHabitos');
             $this->db->from('habito');
             $q = $this->db->get();
 
-            if (count($q->result_array()) == 0)
-            {
+            if (count($q->result_array()) == 0) {
                 return false;
-            }           
+            }
 
             $qHabitos = $q->result_array()[0]['qHabitos'];
 
-            if ($qHabitos == null){
+            if ($qHabitos == null) {
                 return false;
             }
-            
+
             $this->db->select('count(*) as qRespuestas');
             $this->db->where('id_usuario', $usuario);
             $this->db->from('respuesta_habito_usuario');
             $q = $this->db->get();
 
-            if (count($q->result_array()) == 0)
-            {
+            if (count($q->result_array()) == 0) {
                 return true;
-            }       
-            
-            $qRespuestas = $q->result_array()[0]['qRespuestas'];
-            
-            if($qRespuestas != $qHabitos)
-            {
-                $habitosSinResponder = true;
             }
 
-        }catch(Exception $ex)
-        {
+            $qRespuestas = $q->result_array()[0]['qRespuestas'];
+
+            if ($qRespuestas != $qHabitos) {
+                $habitosSinResponder = true;
+            }
+        } catch (Exception $ex) {
             $habitosSinResponder = false;
         }
 
         return $habitosSinResponder;
-        
+    }
+
+    public function getRiesgo($idUsuario)
+    {
+        $this->db->select('ifnull(riesgo,0) as riesgo');
+        $this->db->where('id', $idUsuario);
+        $this->db->from('usuario');
+        $q = $this->db->get();
+        return $q->result_array()[0]['riesgo'];
+    }
+
+    public function getIntervalos($idUsuario)
+    {
+        $this->db->from('intervalo_sintoma');
+        $this->db->order_by('id');
+        $q = $this->db->get();
+
+        if (count($q->result_array()) == 0) {
+            return null;
+        }
+
+        return $q->result_array();
     }
 
 }

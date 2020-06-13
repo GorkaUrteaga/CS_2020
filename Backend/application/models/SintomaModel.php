@@ -66,6 +66,9 @@ class SintomaModel extends CI_Model
                 
             }
 
+            $this->db->where_not_in('id_sintoma', $ids);
+            $this->db->delete('intervalo_sintoma');
+
             $this->db->where_not_in('id', $ids);
             $this->db->delete('sintoma');
 

@@ -106,7 +106,7 @@ input[type=reset] {
   background-color: #21D19F;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 10px 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -137,7 +137,7 @@ input[type=text], input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
-  padding: 15px 32px;
+  padding: 10px 28px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -165,10 +165,12 @@ input[type=text]:placeholder {
 }
 
 #icon {
-  width: 50px;
-  height: 50px;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  width: 70%;
+  height: 70%;
+  max-width: 50px;
+  max-height: 50px;
+  margin-top: 30%;
+  margin-bottom: 10%;
 }
 
 .tittle {

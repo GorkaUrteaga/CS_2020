@@ -34,7 +34,7 @@
                 <?php endif; ?>
             </p>
 
-            <div class="d-flex flex-column justify-content-between h-100">
+            <div class="d-flex flex-column justify-content-between h-100 w-100">
                 <form method="post" action="<?= site_url('Login/recuperarContrasena'); ?>">
                     <?php if (!isset($this->session->recuperar)) : ?>
                         <input type="text" id="email" class="fadeIn second" name="email" placeholder="Correo" required>
@@ -51,7 +51,7 @@
                 </form>
 
                 <div id="formFooter">
-                    <p>¿Ya tienes cuenta?<a class="underlineHover" href="<?= site_url('Login') ?>">Login</a></p>
+                    <p>¿Ya tienes cuenta? <a class="underlineHover" href="<?= site_url('Login') ?>">Inicia sesión</a></p>
                 </div>
             </div>
         </div>

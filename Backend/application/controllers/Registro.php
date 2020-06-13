@@ -35,14 +35,14 @@ class Registro extends REST_Controller
             if (!$us["activado"]) {
                 if ($this->MailModel->enviarCorreoRegistro($mail)) {
                     $status = 2;
-                    $message = "CORREO REENVIADO (USUARIO EXISTENTE PERO NO VERIFICADO)";
+                    $message = "Correo reenviado (Usuario existente pero no verificado)!";
                 } else {
                     $status = -2;
-                    $message = "CORREO NO ENVIADO";
+                    $message = "Usuario ya existente, no se ha podido enviar el correo!";
                 }
             } else {
                 $status = -1;
-                $message = "USUARIO YA EXISTENTE!";
+                $message = "Usuario ya existente!";
             }
         } else {
             //registrar y enviar mail 1
@@ -51,14 +51,14 @@ class Registro extends REST_Controller
             if ($reg) {
                 if ($this->MailModel->enviarCorreoRegistro($mail)) {
                     $status = 1;
-                    $message = "TOT OK (MAIL ENVIAT I USUARI REGISTRAT)";
+                    $message = "Usuario registrado correctamente!";
                 } else {
                     $status = -2;
-                    $message = "CORREO NO ENVIADO";
+                    $message = "Revisa el correo, no se ha podido registrar!";
                 }
             } else {
                 $status = -3;
-                $message = "USUARIO NO REGISTRADO!";
+                $message = "El usuario no se ha podido registrar!";
             }
         }
 

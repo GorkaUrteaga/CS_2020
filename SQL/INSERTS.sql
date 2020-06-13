@@ -5,11 +5,14 @@
 /* INSERT ADMINISTRADORS Marc i Gorka */
 INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('9b114f70047f2c56e828459c1c3961e14cba22da','9725cf25f6f8f353c773d54141a11f48f3f5934b', true, true);
 INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('41a18d197b32f94b56bdbae9f58e7a05834f00fc','3bb04be0bb2073855d220ed98955942e36a2e1cb', true, true);
+INSERT INTO USUARIO (email, password, es_admin, activado) VALUES ('ad8f4ea303748f83d319504b6c31ec5dbc32f6a9','e2be40f160248c95f001179ab2b5aaef6ca1c10e', false, true);
 
 /* Sempre han de donar 100% */ 
-INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Fiebre',40);
-INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Tos seca',50);
-INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Dolor de cabeza',10);
+INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Fiebre',20);
+INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Tos seca',30);
+INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Vómitos',20);
+INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Dolor de cabeza',20);
+INSERT INTO SINTOMA (nombre, porcentaje) VALUES ('Cansamiento',10);
 
 /* HABITOS */
 
@@ -30,3 +33,9 @@ INSERT INTO RESPUESTA_HABITO (id_habito, respuesta, porcentaje) VALUES(2, 'A vec
 INSERT INTO RESPUESTA_HABITO (id_habito, respuesta, porcentaje) VALUES(3, 'Si', -15);
 INSERT INTO RESPUESTA_HABITO (id_habito, respuesta, porcentaje) VALUES(3, 'No', 5);
 INSERT INTO RESPUESTA_HABITO (id_habito, respuesta, porcentaje) VALUES(3, 'A veces', -5);
+
+/* INTERVALO SINTOMAS */
+
+INSERT INTO INTERVALO_SINTOMA (fecha_inicio, fecha_fin, id_usuario, id_sintoma) VALUES('2020-05-12','2020-05-20',3,1);
+INSERT INTO INTERVALO_SINTOMA (fecha_inicio, fecha_fin, id_usuario, id_sintoma) VALUES('2020-05-12','2020-05-20',3,3);
+INSERT INTO INTERVALO_SINTOMA (fecha_inicio, fecha_fin, id_usuario, id_sintoma) VALUES('2020-05-22','2020-06-01',3,4);

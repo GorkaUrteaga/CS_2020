@@ -19,8 +19,13 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <header>
-        <a href=""><i class="fas fa-calendar-alt"></i></a>
-        <a href=""><i class="fas fa-user-circle"></i></a>
+        <?php if (isset($this->session->perfilIncompleto) && $this->session->perfilIncompleto) : ?>
+            <a href="<?= site_url('Usuario/perfilUsuario') ?>"><i class="fas fa-calendar-alt"></i></a>
+        <?php else : ?>
+            <a href="<?= site_url('Usuario/calendarioUsuario') ?>"><i class="fas fa-calendar-alt"></i></a>
+        <?php endif; ?>
+
+        <a href="<?= site_url('Usuario/perfilUsuario') ?>"><i class="fas fa-user-circle"></i></a>
         <a href="<?= site_url('Login') ?>"><i class="fas fa-sign-out-alt"></i></a>
     </header>
 

@@ -1,4 +1,5 @@
 @import 'comun';
+
 body {
     height: 100vh;
     width: 100vw;
@@ -19,9 +20,10 @@ body {
             width: 30%;
             display: flex;
             align-items: center;
-            h4{
+
+            h4 {
                 margin-left: 10px;
-            } 
+            }
         }
 
         ul {
@@ -29,18 +31,20 @@ body {
             display: flex;
             justify-content: space-around;
             list-style: none;
-            li{
+
+            li {
                 color: white;
             }
         }
 
-        a{
+        a {
             //color: #2C3034;
-            color: $secondary-color;
+            color: white;
         }
 
-        a:hover{
+        a:hover {
             color: rgb(255, 255, 255);
+            color: $secondary-color;
             text-decoration: none;
         }
 
@@ -52,23 +56,40 @@ body {
 
     .container-fluid {
         padding: 20px;
-        background-color: $secondary-color;
+        background-color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
         height: 100%;
 
-        .btn{
+        .btn {
             background-color: $button-color;
             border-color: $button-color;
+            -webkit-transition: background-color 200ms linear;
+            -ms-transition: background-color 200ms linear;
+            transition: background-color 200ms linear;
         }
 
-        a{
+        .btn:hover {
+            background-color: $hover-color;
+            border-color: $hover-color;
+            -webkit-transition: background-color 200ms linear;
+            -ms-transition: background-color 200ms linear;
+            transition: background-color 200ms linear;
+        }
+
+        a {
             color: $button-color;
+            -webkit-transition: color 200ms linear;
+            -ms-transition: color 200ms linear;
+            transition: color 200ms linear;
         }
 
-        a:hover{
+        a:hover {
             color: $hover-color;
+            -webkit-transition: color 200ms linear;
+            -ms-transition: color 200ms linear;
+            transition: color 200ms linear;
         }
 
         table {
@@ -79,37 +100,51 @@ body {
             font-weight: bold;
             font-size: 40px;
         }
-        
+
         hr {
             height: 10px;
         }
     }
 
+    table {
+        color: white;
+    }
+
+    .fa-trash-alt {
+        color: white;
+    }
+
 }
 
-#button{
+#button {
     color: white;
 }
 
-.edit{
+.edit {
     font-size: 40px;
     margin-bottom: 20px;
 }
 
-#table_items
-{
+#table_items {
     margin: 0px auto;
     background-color: $primary-color;
 }
 
-#js_porcentaje
-{
+#js_porcentaje {
     margin-right: 12.5%;
     margin-top: 30px;
     text-align: right;
     font-weight: bold;
 }
 
-.errorInput{
+.errorInput {
     border-color: red;
+}
+
+.fadeIn {
+    border-radius: 5px;
+    padding: 5px;
+    border: 0px;
+    text-align: center;
+    width: 100px;
 }
