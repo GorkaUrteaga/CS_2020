@@ -56,6 +56,24 @@ class Usuario extends REST_Controller{
         );
     }
 
+    public function guardarCalendario_post()
+    {
+        $intervalos = json_decode($this->post('intervalos'));
+        $usuario = $this->post('usuario');
+        $status = 0;
+        $message = null;
+        
+        $status = $this->UsuarioModel->guardarIntervalosUsuario($usuario, $intervalos);
+        
+        $this->response(
+            array(
+                "status" => $status,
+                "message" => $status?'Se ha podido modificar el calendario del usuario.':'No se ha podido modificar el calendario del usuario.'
+            ), 
+            REST_Controller::HTTP_OK
+        );
+    }
+
     public function comprobarPerfilUsuario_post()
     {
         $usuario = $this->post('usuario');

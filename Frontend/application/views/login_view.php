@@ -30,9 +30,11 @@
             </div>
             <h4 class="tittle">Login</h4>
 
-            <?php if (isset($error)) : ?>
-                <p class="error"><?= $error ?></p>
-            <?php endif; ?>
+            <p class="error">
+                <?php if (isset($error)) : ?>
+                    <?= $error ?>
+                <?php endif; ?>
+            </p>
             
             <div class="d-flex flex-column justify-content-between h-100">
                 <!-- Login Form -->

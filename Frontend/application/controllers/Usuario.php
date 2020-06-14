@@ -61,13 +61,16 @@ class Usuario extends CI_Controller
 
                     $incluido = strtotime($fechas[$i]) >= strtotime($fecha_inicio) && strtotime($fechas[$i]) <= strtotime($fecha_fin);
 
-                    $sintomasMarcados[$i][$sintoma] = $incluido;
+                    if (!isset($sintomasMarcados[$i][$sintoma]) || !$sintomasMarcados[$i][$sintoma]) {
+                        $sintomasMarcados[$i][$sintoma] = $incluido;
+                    }
 
                     //var_dump($sintomasMarcados[$i]);
                     //array_push($sintomasMarcados[$i], [$sintoma => $incluido]);
 
                     //$sintomasMarcados[$i] = [$sintoma => $incluido];
                     /*
+                    echo "<br><br><br>";
                     echo $i;
                     echo "<br>";
                     echo "Fecha: " . $fechas[$i];
@@ -75,7 +78,7 @@ class Usuario extends CI_Controller
                     echo $fecha_inicio;
                     echo " - $fecha_fin";
                     echo "<br>";
-                    var_dump($sintomasMarcados[$i]);
+                    //var_dump($sintomasMarcados[$i]);
                     echo "<br>";
                     echo $incluido?'INCLUIDO':'NO';
                     echo "<br>";
@@ -83,6 +86,8 @@ class Usuario extends CI_Controller
                     */
                 }
             }
+            //echo "<br><br><br><br><br><br>";
+            //var_dump($sintomasMarcados[0][1]);
             //var_dump($sintomasMarcados);
             //exit;
         }
@@ -268,9 +273,111 @@ class Usuario extends CI_Controller
     {
         //Recibiremos por post (01-01-2020$id_sintoma)
         $intervalo_sintomas = $this->input->post('intervalo_sintomas[]');
+        $intervalos_guardar = [];
+
+        //Tenemos que mirar si son consecutivos, cuando dejen de serlo creamos otro intervalo
+
+        //Ordenem per obtenir d'aquell sintoma tot seguit
 
 
-        var_dump($intervalo_sintomas);
-        exit;
+        if ($intervalo_sintomas != null) {
+            sort($intervalo_sintomas);
+
+            $int_anterior = $intervalo_sintomas[0];
+            $sint_anterior = explode("$", $int_anterior)[0];
+            $fecha_anterior = explode("$", $int_anterior)[1];
+
+            $fecha_inicio = $fecha_anterior;
+
+            $fecha_actual = $fecha_inicio;
+
+            for ($i = 1; $i < count($intervalo_sintomas); $i++) {
+
+                $intervalo = $intervalo_sintomas[$i];
+
+                $sint_actual = explode("$", $intervalo)[0];
+                $fecha_actual = explode("$", $intervalo)[1];
+
+                /*
+                echo "<br>";
+                echo "<br>";
+                echo "Vuelta: $i";
+                echo "<br>";
+                echo "Fecha inicio: $fecha_inicio";
+                echo "<br>";
+                echo "$sint_anterior - $sint_actual";
+                echo "<br>";
+                echo "$fecha_anterior - $fecha_actual";
+                echo "<br>";
+                */
+                //Si el sintoma cambia el intervalo anterior se cierra o si el dia anterior + 1 es diferente al actual
+                if ($sint_actual != $sint_anterior || strtotime($fecha_anterior . " + 1 day") != strtotime($fecha_actual)) {
+
+                    //echo "Fecha anterior: $fecha_anterior";
+                    //echo "<br>";
+                    //echo "Fecha actual:  $fecha_actual"; 
+                    array_push($intervalos_guardar, array('fecha_inicio' => $fecha_inicio, 'fecha_fin' => $fecha_anterior, 'id_sintoma' => $sint_anterior));
+                    $fecha_inicio = null;
+
+                    //echo "<br>Intervalo";
+                    //var_dump($intervalos_guardar[$i]);
+
+                    //echo "<br>";
+                    //echo "Creo interval";
+                }
+
+                if ($fecha_inicio == null) {
+                    $fecha_inicio = $fecha_actual;
+                }
+
+                //$int_anterior = $intervalo;
+                $sint_anterior = $sint_actual;
+                $fecha_anterior = $fecha_actual;
+            }
+
+            //echo "<br>";
+
+            //Afegim el últim
+            if ($fecha_inicio) {
+                array_push($intervalos_guardar, array('fecha_inicio' => $fecha_inicio, 'fecha_fin' => $fecha_actual, 'id_sintoma' => $sint_anterior));
+                //echo "<br><br>Creo interval<br><br>";
+            }
+
+            //var_dump($intervalos_guardar);
+
+            //echo $intervalos_guardar[0]['fecha_inicio'];
+
+            //exit;
+
+            //$aux = json_encode($intervalos_guardar);
+            //$aux = json_decode($aux);
+            //echo date('Y-m-d',strtotime($aux[0]->fecha_inicio));
+            //exit;
+
+        }
+
+        $action = 'guardarCalendario';
+        $url = $this->baseUrl . $action;
+        $ch = $this->ch;
+        $response = '';
+        $request = 'usuario=' . $this->session->usuario->id . '&' . 'intervalos=' . json_encode($intervalos_guardar);
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        $response = curl_exec($ch);
+        $json = json_decode($response);
+
+        //var_dump($json);
+        //exit;
+
+        if ($json == null) {
+            Redirect('ErrorConexion');
+        }
+
+        Redirect('Usuario');
     }
 }

@@ -6,6 +6,8 @@ window.addEventListener('load',function(){
     let submit = document.getElementById("registrar");
     warning = document.getElementById("warning");
     
+	warning.style.display = "none";
+	
     submit.addEventListener("click",passIguals);
     pass.addEventListener("keyup", CapsStatus);
     conpass.addEventListener("keyup", CapsStatus);

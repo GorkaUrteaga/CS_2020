@@ -206,4 +206,34 @@ class UsuarioModel extends CI_Model
         return $q->result_array();
     }
 
+    public function guardarIntervalosUsuario($usuario, $intervalos)
+    {
+        try {
+            $this->db->trans_begin();
+
+            $this->db->where('id_usuario', $usuario);
+            $this->db->delete('intervalo_sintoma');
+            
+            //$this->db->trans_commit();
+
+            //return true;
+
+            foreach ($intervalos as $intervalo) {
+                $this->db->insert('intervalo_sintoma', array(
+                    'fecha_inicio'  => date('Y-m-d', strtotime($intervalo->fecha_inicio)),
+                    'fecha_fin'     => date('Y-m-d', strtotime($intervalo->fecha_fin)),
+                    'id_usuario'    => $usuario,
+                    'id_sintoma'    => $intervalo->id_sintoma
+                ));
+            }
+            
+            $this->db->trans_commit();
+
+        } catch (Exception $ex) {
+            $this->db->trans_rollback();
+            return false;
+        }
+
+        return true;
+    }
 }

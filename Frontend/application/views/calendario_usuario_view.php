@@ -34,7 +34,7 @@
                         <tr>
                             <td><?= $fechas[$i] ?></td>
                             <?php foreach ($sintomas as $sintoma) : ?>
-                                <td><input class="checkbox-calendario" name="intervalo_sintomas[]" type="checkbox" value="<?= $fechas[$i] . '$' . $sintoma->id ?>" <?php if(isset($sintomasMarcados[$i][$sintoma->id]) && $sintomasMarcados[$i][$sintoma->id]) echo "checked"; ?>></td>
+                                <td><input class="checkbox-calendario" name="intervalo_sintomas[]" type="checkbox" value="<?= $sintoma->id . '$' . $fechas[$i] ?>" <?php if(isset($sintomasMarcados[$i][$sintoma->id]) && $sintomasMarcados[$i][$sintoma->id]) echo "checked"; ?>></td>
                             <?php endforeach; ?>
                         <?php endfor; ?>
                 </tbody>

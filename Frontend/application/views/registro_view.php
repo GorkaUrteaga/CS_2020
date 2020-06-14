@@ -28,9 +28,11 @@
                 <img src="<?= base_url('imgs/health_icon.png') ?>" id="icon" alt="COVID-19" />
             </div>
             <h4 class="tittle">Registro</h4>
-            <?php if (isset($error)) : ?>
-                <p class="error"><?= $error ?></p>
-            <?php endif; ?>
+            <p class="error">
+                <?php if (isset($error)) : ?>
+                    <?= $error ?>
+                <?php endif; ?>
+            </p>
 
             <div class="d-flex flex-column justify-content-between h-100">
                 <!-- Login Form -->

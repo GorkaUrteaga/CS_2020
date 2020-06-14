@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS USUARIO;
 /* VIEWS */
 
 DROP VIEW IF EXISTS vw_habito_respuestas;
+DROP VIEW IF EXISTS vw_sintomas_diferentes;
 
 /* TRIGGERS */
 DROP TRIGGER IF EXISTS trgAIRiesgoUsuarioRespuestaHabitoUsuario;

@@ -77,6 +77,11 @@ SELECT *, (select porcentaje from respuesta_habito where id_habito = h.id and re
 (select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'A veces') as a_veces
 from habito h;
 
+CREATE VIEW vw_sintomas_diferentes
+AS
+select * from intervalo_sintoma
+group by id_usuario,id_sintoma;
+
 /* ****************************************************** */
 /* ********************** TRIGGERS ********************** */
 /* ****************************************************** */
@@ -367,10 +372,10 @@ BEGIN
 	ON RH.id = RHU.id_respuesta AND RH.id_habito = RHU.id_habito
 	WHERE RHU.id_usuario = usuario_id;
 
-    SELECT IFNULL(SUM(IFNULL(porcentaje,0)),0) INTO @riesgo_sintoma FROM SINTOMA S
-    JOIN INTERVALO_SINTOMA INS
-    ON S.id = INS.id_sintoma
-    WHERE INS.id_usuario = usuario_id;
+    SELECT IFNULL(SUM(IFNULL(porcentaje,0)),0) INTO @riesgo_sintoma FROM sintoma s
+    JOIN vw_sintomas_diferentes vw
+    ON s.id = vw.id_sintoma
+	WHERE vw.id_usuario = usuario_id;
   
 	UPDATE USUARIO
 		SET riesgo =
