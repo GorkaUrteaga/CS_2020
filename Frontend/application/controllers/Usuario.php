@@ -139,6 +139,10 @@ class Usuario extends CI_Controller
 
         $intervalos = $json->data;
 
+        //echo "<br><br><br><br>";
+        //var_dump($json);
+        //exit;
+
         return $intervalos;
     }
 

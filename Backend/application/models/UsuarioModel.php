@@ -197,6 +197,7 @@ class UsuarioModel extends CI_Model
     {
         $this->db->from('intervalo_sintoma');
         $this->db->order_by('id');
+        $this->db->where('id_usuario', $idUsuario);
         $q = $this->db->get();
 
         if (count($q->result_array()) == 0) {
