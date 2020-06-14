@@ -14,7 +14,7 @@ class UsuarioModel extends CI_Model
     public function getOne($mail, $pass)
     {
         $array = array('email' => $mail, 'password' => $pass);
-        $this->db->from('usuario');
+        $this->db->from('USUARIO');
         $this->db->where($array);
         $q = $this->db->get();
         if (count($q->result_array()) == 0)
@@ -26,7 +26,7 @@ class UsuarioModel extends CI_Model
     public function getUsuarioPorCorreo($mail)
     {
         $array = array('email' => $mail);
-        $this->db->from('usuario');
+        $this->db->from('USUARIO');
         $this->db->where($array);
         $q = $this->db->get();
         if (count($q->result_array()) == 0) {
@@ -40,7 +40,7 @@ class UsuarioModel extends CI_Model
     {
         $ok = false;
         try {
-            $this->db->insert('usuario', array(
+            $this->db->insert('USUARIO', array(
                 'email'  => sha1($mail),
                 'password'    => $pass
             ));
@@ -60,7 +60,7 @@ class UsuarioModel extends CI_Model
                 'activado' => true
             );
             $this->db->where('email', $email);
-            $this->db->update('usuario', $data);
+            $this->db->update('USUARIO', $data);
 
             $ok = ($this->db->affected_rows() != 1) ? false : true;
         } catch (Exception $e) {
@@ -83,7 +83,7 @@ class UsuarioModel extends CI_Model
             do {
                 $codigo = substr(str_shuffle($permitted_chars), 0, 5);
                 $this->db->where('codigo_recuperacion', $codigo);
-                $q = $this->db->get('usuario');
+                $q = $this->db->get('USUARIO');
                 $numRows = $q->num_rows();
                 $timeOut = time();
             } while ($numRows > 0 && ($timeOut - $time < 10));
@@ -97,7 +97,7 @@ class UsuarioModel extends CI_Model
                     'codigo_recuperacion' => $codigo
                 );
                 $this->db->where('email', sha1($email));
-                $this->db->update('usuario', $data);
+                $this->db->update('USUARIO', $data);
 
                 $ok = ($this->db->affected_rows() != 1) ? false : true;
             }
@@ -111,7 +111,7 @@ class UsuarioModel extends CI_Model
     public function comprobarCodigoRecuperacion($codigo)
     {
         $array = array('codigo_recuperacion' => $codigo);
-        $this->db->from('usuario');
+        $this->db->from('USUARIO');
         $this->db->where($array);
         $q = $this->db->get();
         if (count($q->result_array()) != 0) {
@@ -130,7 +130,7 @@ class UsuarioModel extends CI_Model
                 'codigo_recuperacion' => null
             );
             $this->db->where('email', $email);
-            $this->db->update('usuario', $data);
+            $this->db->update('USUARIO', $data);
 
             $ok = ($this->db->affected_rows() != 1) ? false : true;
         } catch (Exception $ex) {
@@ -150,7 +150,7 @@ class UsuarioModel extends CI_Model
 
         try {
             $this->db->select('count(*) as qHabitos');
-            $this->db->from('habito');
+            $this->db->from('HABITO');
             $q = $this->db->get();
 
             if (count($q->result_array()) == 0) {
@@ -165,7 +165,7 @@ class UsuarioModel extends CI_Model
 
             $this->db->select('count(*) as qRespuestas');
             $this->db->where('id_usuario', $usuario);
-            $this->db->from('respuesta_habito_usuario');
+            $this->db->from('RESPUESTA_HABITO_USUARIO');
             $q = $this->db->get();
 
             if (count($q->result_array()) == 0) {
@@ -188,14 +188,14 @@ class UsuarioModel extends CI_Model
     {
         $this->db->select('ifnull(riesgo,0) as riesgo');
         $this->db->where('id', $idUsuario);
-        $this->db->from('usuario');
+        $this->db->from('USUARIO');
         $q = $this->db->get();
         return $q->result_array()[0]['riesgo'];
     }
 
     public function getIntervalos($idUsuario)
     {
-        $this->db->from('intervalo_sintoma');
+        $this->db->from('INTERVALO_SINTOMA');
         $this->db->order_by('id');
         $this->db->where('id_usuario', $idUsuario);
         $q = $this->db->get();
@@ -213,14 +213,14 @@ class UsuarioModel extends CI_Model
             $this->db->trans_begin();
 
             $this->db->where('id_usuario', $usuario);
-            $this->db->delete('intervalo_sintoma');
+            $this->db->delete('INTERVALO_SINTOMA');
             
             //$this->db->trans_commit();
 
             //return true;
 
             foreach ($intervalos as $intervalo) {
-                $this->db->insert('intervalo_sintoma', array(
+                $this->db->insert('INTERVALO_SINTOMA', array(
                     'fecha_inicio'  => date('Y-m-d', strtotime($intervalo->fecha_inicio)),
                     'fecha_fin'     => date('Y-m-d', strtotime($intervalo->fecha_fin)),
                     'id_usuario'    => $usuario,

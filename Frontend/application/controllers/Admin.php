@@ -1,6 +1,6 @@
 <?php
 
-include APPPATH . 'third_party\config_ws.php';
+include APPPATH . 'third_party/config_ws.php';
 
 class Admin extends CI_Controller
 {
@@ -208,9 +208,14 @@ class Admin extends CI_Controller
 
             $response = curl_exec($ch);
             $json = json_decode($response);
+
+            //var_dump($json);
+            //exit;
+            
             if($json == null){
                 Redirect('ErrorConexion');
             }
+            
             Redirect('Admin');
         }
     }

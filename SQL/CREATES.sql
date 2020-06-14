@@ -70,16 +70,16 @@ CREATE TABLE INTERVALO_SINTOMA
 /* ****************************************************** */
 /* ************************ VIEWS *********************** */
 /* ****************************************************** */
-CREATE VIEW vw_habito_respuestas
+CREATE VIEW VW_HABITO_RESPUESTAS
 AS
-SELECT *, (select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'Si') as si
-,(select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'No') as no,
-(select porcentaje from respuesta_habito where id_habito = h.id and respuesta = 'A veces') as a_veces
-from habito h;
+SELECT *, (select porcentaje from RESPUESTA_HABITO where id_habito = h.id and respuesta = 'Si') as si
+,(select porcentaje from RESPUESTA_HABITO where id_habito = h.id and respuesta = 'No') as no,
+(select porcentaje from RESPUESTA_HABITO where id_habito = h.id and respuesta = 'A veces') as a_veces
+from HABITO h;
 
-CREATE VIEW vw_sintomas_diferentes
+CREATE VIEW VW_SINTOMAS_DIFERENTES
 AS
-select * from intervalo_sintoma
+select * from INTERVALO_SINTOMA
 group by id_usuario,id_sintoma;
 
 /* ****************************************************** */
@@ -95,7 +95,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioRespuestaHabitoUsuario
     ON RESPUESTA_HABITO_USUARIO FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(NEW.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(NEW.id_usuario);
 	
 	END;
 	$$
@@ -109,7 +109,7 @@ CREATE TRIGGER trgAURiesgoUsuarioRespuestaHabitoUsuario
     ON RESPUESTA_HABITO_USUARIO FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(NEW.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(NEW.id_usuario);
 		
 	END;
 	$$
@@ -123,7 +123,7 @@ CREATE TRIGGER trgADRiesgoUsuarioRespuestaHabitoUsuario
     ON RESPUESTA_HABITO_USUARIO FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(OLD.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(OLD.id_usuario);
 
 	END;
 	$$
@@ -142,7 +142,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioRespuestaHabito
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM respuesta_habito_usuario WHERE id_habito = NEW.id;
+		SELECT id_usuario FROM RESPUESTA_HABITO_USUARIO WHERE id_habito = NEW.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -153,7 +153,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioRespuestaHabito
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 	END;
@@ -171,7 +171,7 @@ CREATE TRIGGER trgAURiesgoUsuarioRespuestaHabito
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM respuesta_habito_usuario WHERE id_habito = NEW.id;
+		SELECT id_usuario FROM RESPUESTA_HABITO_USUARIO WHERE id_habito = NEW.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -182,7 +182,7 @@ CREATE TRIGGER trgAURiesgoUsuarioRespuestaHabito
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 	END;
@@ -200,7 +200,7 @@ CREATE TRIGGER trgADRiesgoUsuarioRespuestaHabito
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM respuesta_habito_usuario WHERE id_habito = OLD.id;
+		SELECT id_usuario FROM RESPUESTA_HABITO_USUARIO WHERE id_habito = OLD.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -211,7 +211,7 @@ CREATE TRIGGER trgADRiesgoUsuarioRespuestaHabito
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 	END;
@@ -231,7 +231,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioSintoma
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM intervalo_sintoma WHERE id_sintoma = NEW.id;
+		SELECT id_usuario FROM INTERVALO_SINTOMA WHERE id_sintoma = NEW.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -242,7 +242,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioSintoma
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 			
@@ -261,7 +261,7 @@ CREATE TRIGGER trgAURiesgoUsuarioSintoma
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM intervalo_sintoma WHERE id_sintoma = NEW.id;
+		SELECT id_usuario FROM INTERVALO_SINTOMA WHERE id_sintoma = NEW.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -272,7 +272,7 @@ CREATE TRIGGER trgAURiesgoUsuarioSintoma
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 	END;
@@ -290,7 +290,7 @@ CREATE TRIGGER trgADRiesgoUsuarioSintoma
 		DECLARE id_usuario BIGINT;
 		
 		DECLARE id_usuarios CURSOR FOR
-		SELECT id_usuario FROM intervalo_sintoma WHERE id_sintoma = OLD.id;
+		SELECT id_usuario FROM INTERVALO_SINTOMA WHERE id_sintoma = OLD.id;
 		
 		DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 		
@@ -301,7 +301,7 @@ CREATE TRIGGER trgADRiesgoUsuarioSintoma
 				LEAVE read_loop;
 			END IF;
 			FETCH id_usuarios INTO id_usuario;
-			CALL recalcular_riesgo_usuario(id_usuario);
+			CALL RECALCULAR_RIESGO_USUARIO(id_usuario);
 			
 		END LOOP read_loop;
 	END;
@@ -319,7 +319,7 @@ CREATE TRIGGER trgAIRiesgoUsuarioIntervaloSintoma
     ON INTERVALO_SINTOMA FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(NEW.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(NEW.id_usuario);
 
 	END;
 	$$
@@ -333,7 +333,7 @@ CREATE TRIGGER trgAURiesgoUsuarioIntervaloSintoma
     ON INTERVALO_SINTOMA FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(NEW.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(NEW.id_usuario);
 
 	END;
 	$$
@@ -347,7 +347,7 @@ CREATE TRIGGER trgADRiesgoUsuarioIntervaloSintoma
     ON INTERVALO_SINTOMA FOR EACH ROW
     BEGIN
 
-		CALL recalcular_riesgo_usuario(OLD.id_usuario);
+		CALL RECALCULAR_RIESGO_USUARIO(OLD.id_usuario);
 
 	END;
 	$$
@@ -360,7 +360,7 @@ DELIMITER ;
 /* PROCEDURE RECALCULAR_RIESGO_USUARIO */
 
 DELIMITER $$
-CREATE PROCEDURE recalcular_riesgo_usuario (IN usuario_id BIGINT)
+CREATE PROCEDURE RECALCULAR_RIESGO_USUARIO (IN usuario_id BIGINT)
 BEGIN
 	DECLARE riesgo DECIMAL;
     DECLARE riesgo_sintoma DECIMAL;
@@ -372,8 +372,8 @@ BEGIN
 	ON RH.id = RHU.id_respuesta AND RH.id_habito = RHU.id_habito
 	WHERE RHU.id_usuario = usuario_id;
 
-    SELECT IFNULL(SUM(IFNULL(porcentaje,0)),0) INTO @riesgo_sintoma FROM sintoma s
-    JOIN vw_sintomas_diferentes vw
+    SELECT IFNULL(SUM(IFNULL(porcentaje,0)),0) INTO @riesgo_sintoma FROM SINTOMA s
+    JOIN VW_SINTOMAS_DIFERENTES vw
     ON s.id = vw.id_sintoma
 	WHERE vw.id_usuario = usuario_id;
   

@@ -14,7 +14,7 @@ class HabitoModel extends CI_Model
 
     public function getAll()
     {
-        $this->db->from('vw_habito_respuestas');
+        $this->db->from('VW_HABITO_RESPUESTAS');
         $this->db->order_by('id');
         $q = $this->db->get();
         if (count($q->result_array()) == 0) {
@@ -26,7 +26,7 @@ class HabitoModel extends CI_Model
 
     public function obtenerHabitosUsuario($idUsuario)
     {
-        $this->db->from('habito');
+        $this->db->from('HABITO');
         $q = $this->db->get();
 
         if (count($q->result_array()) == 0) {
@@ -46,7 +46,7 @@ class HabitoModel extends CI_Model
 
             $h->nombre = $habito['nombre'];
 
-            $this->db->from('respuesta_habito');
+            $this->db->from('RESPUESTA_HABITO');
             $this->db->where('id_habito', $habito['id']);
             $q = $this->db->get();
 
@@ -67,7 +67,7 @@ class HabitoModel extends CI_Model
                 $r->id = $respuesta['id'];
                 $r->respuesta = $respuesta['respuesta'];
 
-                $this->db->from('respuesta_habito_usuario');
+                $this->db->from('RESPUESTA_HABITO_USUARIO');
                 $this->db->where('id_usuario', $idUsuario);
                 $this->db->where('id_habito', $habito['id']);
                 $this->db->where('id_respuesta', $respuesta['id']);
@@ -100,7 +100,7 @@ class HabitoModel extends CI_Model
             $this->db->trans_begin();
 
             foreach ($items as $item) {
-                $query = $this->db->get_where('habito', array('LOWER(nombre)' => strtolower(trim($item->nombre))));
+                $query = $this->db->get_where('HABITO', array('LOWER(nombre)' => strtolower(trim($item->nombre))));
 
                 if ($query->num_rows() == 0) {
                     //Insert
@@ -119,7 +119,7 @@ class HabitoModel extends CI_Model
                             'respuesta' => $key,
                             'porcentaje' => $item->$res
                         );
-                        $this->db->insert('respuesta_habito', $data);
+                        $this->db->insert('RESPUESTA_HABITO', $data);
                     }
                 } else {
                     //Update
@@ -141,13 +141,13 @@ class HabitoModel extends CI_Model
 
             //Borramos las respuestas y luego los sintomas
             $this->db->where_not_in('id_habito', $ids);
-            $this->db->delete('respuesta_habito_usuario');
+            $this->db->delete('RESPUESTA_HABITO_USUARIO');
 
             $this->db->where_not_in('id_habito', $ids);
-            $this->db->delete('respuesta_habito');
+            $this->db->delete('RESPUESTA_HABITO');
 
             $this->db->where_not_in('id', $ids);
-            $this->db->delete('habito');
+            $this->db->delete('HABITO');
 
             $this->db->trans_commit();
         } catch (Exception $ex) {
@@ -168,7 +168,7 @@ class HabitoModel extends CI_Model
                 $respuesta = $respuestas[$i];
                 $habito = $habitos[$i];
 
-                $query = $this->db->get_where('respuesta_habito_usuario', array('id_usuario' => $usuario, 'id_habito' => $habito));
+                $query = $this->db->get_where('RESPUESTA_HABITO_USUARIO', array('id_usuario' => $usuario, 'id_habito' => $habito));
                 
                 if ($query->num_rows() == 0) {
                     //Insert
@@ -178,7 +178,7 @@ class HabitoModel extends CI_Model
                         'id_usuario' => $usuario,
                         'id_respuesta' => $respuesta
                     );
-                    $this->db->insert('respuesta_habito_usuario', $data);
+                    $this->db->insert('RESPUESTA_HABITO_USUARIO', $data);
                     
                 } else {
                     //Update
@@ -189,7 +189,7 @@ class HabitoModel extends CI_Model
 
                     $this->db->where('id_habito', $habito);
                     $this->db->where('id_usuario', $usuario);
-                    $this->db->update('respuesta_habito_usuario', $data);
+                    $this->db->update('RESPUESTA_HABITO_USUARIO', $data);
                 }
             }
             $this->db->trans_commit();

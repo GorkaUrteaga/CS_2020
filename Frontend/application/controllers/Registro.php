@@ -1,6 +1,6 @@
 <?php
 
-include APPPATH . 'third_party\config_ws.php';
+include APPPATH . 'third_party/config_ws.php';
 
 class Registro extends CI_Controller
 {

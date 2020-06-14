@@ -1,6 +1,6 @@
 <?php
 
-include APPPATH . 'third_party\config_ws.php';
+include APPPATH . 'third_party/config_ws.php';
 
 class Login extends CI_Controller
 {
@@ -13,7 +13,11 @@ class Login extends CI_Controller
         $this->ch = curl_init();
     }
 
-
+    /**
+     * Funció index que destrueix totes les session,
+     * ens serveix com a logout. I posteriorment redirigeix al login
+     * @return login_view (Current login view)
+     */
     public function index()
     {
         $this->session->sess_destroy();
@@ -25,6 +29,9 @@ class Login extends CI_Controller
      * Capturem els parametres per post i ho enviem 
      * al ws per que ens retorni l'usuari si existeix
      * sino existeix ens retornem a la vista notificant els errors
+     * 
+     * @return login_view (Current login view)
+     * 
      */
     public function logear()
     {
@@ -96,6 +103,16 @@ class Login extends CI_Controller
         
     }
 
+    /**
+     * recuperarContrasena, acció que recull les dades necesaries, per 
+     * poder canviar la contrassenya de l'usuari.
+     * En el pas 1 mostrarem el correu per aque l'introdueixi, un cop validat i enviat
+     * el correu amb el codi per canviar la password, l'usuari ficara el codi,
+     * un cop verificat, ficarà la nova contrassenya i via ws canviarem aquesta contrassenya
+     * 
+     * @return recuperar_contrasena_view (Vista per recuperar la password)
+     * 
+     */
     public function recuperarContrasena()
     {
         $action = null;
@@ -203,15 +220,4 @@ class Login extends CI_Controller
         $this->load->view('recuperar_contrasena_view', $data);
     }
 
-    /**
-     * Logout
-     * Destruim la session i tornem a portar a la pantalla de login
-     */
-    /*
-    public function logout()
-    {
-        $this->session->sess_destroy();
-        redirect('Login');
-    }
-    */
 }
